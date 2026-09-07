@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light only">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <title>Ørjan Arnevig Samuelsen</title>
 <meta name="description" content="Sosiolog. Forsker ved NIFU i Oslo.">
 
@@ -11,261 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-<style>
-:root{
-  color-scheme: light only;
-  --papir: #ffffff;
-  --blekk: #111111;
-  --gra:   #6a6a6a;
-  --bla:   #0000ee;
-  --strek: #dcdcdc;
-  --mono:  'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
-}
-
-*{ box-sizing:border-box }
-
-html, body{
-  background:var(--papir) !important;
-  color:var(--blekk) !important;
-}
-@media (prefers-color-scheme: dark){
-  html, body{ background:var(--papir) !important; color:var(--blekk) !important }
-  h1, p, .trigger{ color:var(--blekk) !important }
-}
-html{
-  -webkit-text-size-adjust:100%;
-  scrollbar-gutter:stable;   /* plassen til rullefeltet står alltid av, så
-                                 innholdet ikke rykker sidelengs når det
-                                 skrus av og på under bevegelsen */
-}
-
-body{
-  margin:0;
-  font-family:var(--mono);
-  font-size:15px;
-  line-height:1.7;
-}
-
-/* ---- Scenen ---- */
-.stage{
-  max-width:38em;
-  margin:0 auto;
-  padding:0 1.25rem 5rem;
-  padding-top:calc(50vh - 9em);
-  text-align:center;
-  overflow:hidden;
-  transition:padding-top .68s cubic-bezier(.19,.72,.22,1);
-}
-.stage.open{ padding-top:2.5rem }
-
-/* Skinnen holder forsiden og teksten i samme kolonne.
-   Når en tekst åpnes, flyttes hele kolonnen opp som ett stykke:
-   forsiden går ut over kanten, teksten kommer opp i stedet. */
-.rail{
-  transition:transform .62s cubic-bezier(.5,.02,.3,1);
-  will-change:transform;
-}
-
-/* ---- Tittelen ---- */
-.masthead{ display:inline-block; text-align:left }
-
-h1{
-  font-size:21px;
-  font-weight:600;
-  letter-spacing:-.025em;
-  line-height:1.35;
-  margin:0;
-}
-
-.sub{
-  font-size:14px;
-  font-weight:400;
-  color:var(--gra);
-  margin:.55em 0 0;
-}
-
-.cursor{
-  display:inline-block;
-  width:.5em; height:.95em;
-  background:var(--gra);
-  vertical-align:-.12em;
-  margin-left:.25em;
-  animation:blink 1.1s steps(1) infinite;
-}
-@keyframes blink{ 50%{ opacity:0 } }
-
-@media (min-width:560px){
-  h1{ font-size:27px }
-  .sub{ font-size:15px }
-}
-
-/* ---- Lenkerad ---- */
-.links{
-  margin:2.9em 0 0;
-  padding:0;
-  list-style:none;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:.9em 1.6em;
-  font-size:13.5px;
-}
-.links a{
-  color:var(--bla);
-  text-decoration:none;
-  display:inline-flex;
-  align-items:center;
-  gap:.55em;
-  border-bottom:1px solid transparent;
-}
-.links a:visited{ color:var(--bla) }
-@media (hover:hover){ .links a:hover{ border-bottom-color:var(--bla) } }
-.links a:focus-visible{ outline:1px dotted var(--bla); outline-offset:3px }
-
-.mark{ width:1.05em; height:1.05em; display:block; flex:none; fill:var(--bla) }
-
-/* ---- Menyvalgene ---- */
-.actions{
-  margin:3.2em 0 0;
-  padding:0;
-  list-style:none;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:.8em 2.4em;
-  font-size:15px;
-}
-
-.trigger{
-  background:none;
-  border:0;
-  padding:0 0 0 1.8em;
-  font:inherit;
-  color:var(--blekk);
-  cursor:pointer;
-  position:relative;
-}
-.trigger::before{
-  content:"\25B6";
-  position:absolute;
-  left:0;
-  font-size:.78em;
-  top:.2em;
-  color:var(--bla);
-  opacity:0;
-  transition:opacity .12s;
-}
-.trigger[aria-expanded="true"]::before{ opacity:1 }
-.trigger:focus-visible::before{ opacity:1 }
-@media (hover:hover){ .trigger:hover::before{ opacity:1 } }
-.trigger:focus-visible{ outline:1px dotted var(--blekk); outline-offset:4px }
-
-/* ---- Panelene ---- */
-.panel{
-  display:none;
-  opacity:0;
-  transform:translateY(6px);
-  transition:opacity .5s .12s, transform .5s .12s;
-  padding-top:3em;
-  text-align:left;
-}
-.panel.showing{ display:block }
-.panel.shown{ opacity:1; transform:none }
-
-.panel p{ margin:0 0 1.1em; max-width:60ch }
-.panel a{ color:var(--bla) }
-.panel a:visited{ color:#551a8b }
-
-hr{ border:0; border-top:1px solid var(--strek); margin:0 0 2.6em }
-
-.pub{ margin:0 0 1.4em }
-.pub .t{ margin:0 }
-.pub .m{ margin:0; color:var(--gra); font-size:13px }
-
-/* Knapp som ser ut som en lenke. Brukes til tekster som ligger her,
-   fordi en ekte lenke fanges opp av enkelte appvisninger. */
-.lenke{
-  background:none;
-  border:0;
-  padding:0;
-  font:inherit;
-  color:var(--bla);
-  text-decoration:underline;
-  cursor:pointer;
-  text-align:left;
-}
-.lenke:focus-visible{ outline:1px dotted var(--bla); outline-offset:2px }
-
-/* ---- Leseren: teksten overtar siden ---- */
-.reader{
-  display:none;
-  text-align:left;
-  padding-top:2.5rem;
-}
-.reader.vises{ display:block }
-
-.tilbake{
-  background:none;
-  border:0;
-  padding:0;
-  font:inherit;
-  font-size:13.5px;
-  color:var(--bla);
-  cursor:pointer;
-  margin:0 0 3em;
-}
-.tilbake:hover{ text-decoration:underline }
-
-.tekst{ display:none }
-.tekst.vises{ display:block }
-
-.tekst h2:focus{ outline:none }
-.tekst h2{
-  font-size:20px;
-  font-weight:600;
-  letter-spacing:-.02em;
-  line-height:1.4;
-  margin:0 0 .5em;
-}
-.tekst .kilde{
-  color:var(--gra);
-  font-size:13px;
-  margin:0 0 2.6em;
-}
-.tekst p{ margin:0 0 1.2em; font-size:15.5px; line-height:1.85; max-width:34em }
-.tekst .ingress{ font-weight:500 }
-
-.tekst h3{
-  font-size:15.5px;
-  font-weight:600;
-  margin:2.8em 0 1.1em;
-  max-width:34em;
-}
-
-.tekst blockquote{
-  margin:1.8em 0;
-  padding-left:1.2em;
-  border-left:2px solid var(--strek);
-  color:var(--gra);
-  max-width:34em;
-}
-.tekst blockquote p{ margin:0 }
-
-.tekst sup{ font-size:.7em; vertical-align:super; line-height:0 }
-
-.tekst .fot{
-  margin-top:3em;
-  padding-top:1.6em;
-  border-top:1px solid var(--strek);
-  max-width:34em;
-}
-.tekst .fot p{ font-size:13px; line-height:1.7; color:var(--gra); margin:0 0 .6em }
-.tekst p:last-child{ margin-bottom:0 }
-
-@media (prefers-reduced-motion:reduce){
-  *{ animation:none !important; transition:none !important }
-}
-</style>
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
@@ -295,7 +42,7 @@ hr{ border:0; border-top:1px solid var(--strek); margin:0 0 2.6em }
         </svg>
         LinkedIn</a></li>
 
-      <li><a href="https://bsky.app/profile/sivertohn.bsky.social" target="_blank" rel="noopener noreferrer">
+      <li><a href="https://bsky.app/profile/orjansamuelsen.no" target="_blank" rel="noopener noreferrer">
         <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 10.5C10.4 7.6 6.9 3.4 4 2.2 1.9 1.3.8 2.1.8 4.2c0 1.9.6 6.1 1 6.8.9 1.7 2.9 2.2 4.7 1.9-2.4.5-4.4 1.6-1.7 4.6 2.7 3 5.5.5 7.2-2.3 1.7 2.8 4.5 5.3 7.2 2.3 2.7-3 .7-4.1-1.7-4.6 1.8.3 3.8-.2 4.7-1.9.4-.7 1-4.9 1-6.8 0-2.1-1.1-2.9-3.2-2C17.1 3.4 13.6 7.6 12 10.5z"/>
         </svg>
@@ -467,146 +214,22 @@ hr{ border:0; border-top:1px solid var(--strek); margin:0 0 2.6em }
 
       <div class="pub">
         <p class="t">2022. <a href="https://sosiologen.no/debatt/eggehvite-og-eggeplomme/" target="_blank" rel="noopener noreferrer">Eggehvite og eggeplomme</a></p>
-        <p class="m">Sosiologen, innlegg. <button class="lenke" data-tekst="eggehvite-og-eggeplomme">Les her</button></p>
+        <p class="m">Sosiologen, innlegg. <a class="lenke" href="/tekster/eggehvite-og-eggeplomme.html">Les her</a></p>
       </div>
       <div class="pub">
         <p class="t">2022. <a href="https://sosiologen.no/debatt/den-teorilose-sosiologien/" target="_blank" rel="noopener noreferrer">Den teoriløse sosiologien</a></p>
-        <p class="m">Sosiologen, kronikk. <button class="lenke" data-tekst="teorilose-sosiologien">Les her</button></p>
+        <p class="m">Sosiologen, kronikk. <a class="lenke" href="/tekster/teorilose-sosiologien.html">Les her</a></p>
       </div>
     </section>
 
   </div><!-- /forside -->
 
   <!-- ============ LESEREN ============
-       Én <article> per tekst. id-en er adressen:
-       orjansamuelsen.no/#om-a-telle -->
+       Tom beholder. Innholdet hentes fra filene i tekster/
+       når man klikker, slik at hver tekst har sin egen adresse. -->
   <div class="reader" id="reader">
     <button class="tilbake" id="tilbake">&#8592; Tilbake</button>
-
-    <article class="tekst" id="teorilose-sosiologien">
-      <h2>Den teoriløse sosiologien</h2>
-      <p class="kilde">2022. Sosiologen, kronikk.</p>
-
-      <p class="ingress">Mangel på teoriutvikling i norsk sosiologi er et stort problem. Problemorientert empirisme, økende fragmentering og dagens tellekantsystem er noen av grunnene til at teoriutvikling er nærmest umulig. Det er på tide at det skjer noe.</p>
-
-      <p>Vi trenger mer teori i norsk sosiologi. I 2009 besluttet Norges forskningsråd å oppnevne et særskilt panel for en helhetlig evaluering av norsk sosiologi. Den gang ble man kraftig kritisert for å undergrave sosiologisk teoriutvikling til fordel for såkalt problemorientert empirisme.</p>
-
-      <p>Åtte år senere, i 2017, bestemte Norges forskningsråd igjen å oppnevne et panel for en fornyet gjennomgang av sosiologien og for å følge opp den foregående evalueringen. Det viste seg imidlertid at svært lite hadde endret seg. Norsk sosiologi er rett og slett pinlig svake når det kommer til teori og teoriutvikling.</p>
-
-      <p>Gjør det noe da? Hvorfor er teori så viktig? Først og fremst er teori viktig fordi det gir oss muligheten til å begripe den virkeligheten vi er en del av. Teori gjør det nemlig mulig å konstruere lover, utarbeide prinsipper og registrere regelmessigheter. Teori tilbyr rett og slett en oversikt og en mening til det empiriske kaoset vi lever i, den hjelper oss å se. Uten teori kan knapt vitenskapen klassifiseres som noe mer enn en ansamling eksperimentelle resultater.</p>
-
-      <h3>Problemorientert empirisme</h3>
-
-      <p>Slik jeg ser det er hovedutfordringen med norsk sosiologi i dag at alt for lite forskning kan sies å være relevant for sosiologi som fag.</p>
-
-      <p>Intensjonen er nemlig ikke alltid å komme med disiplinrelevante forskningsspørsmål, men å komme med forskningsspørsmål som er av samfunnsmessig nytte, fra et velferdsstatlig perspektiv, og som forhåpentligvis bidrar til å løse konkrete sosiale problemer. At dette ikke alene vekker større furore, fatter jeg ikke. Man er så opptatt av at forskningen skal være dagsaktuell og kunne anvendes til noe positivt at utviklingen av sosiologi som vitenskapelig disiplin havner i bakleksa.</p>
-
-      <p>Kunnskap som indirekte kan bidra til å løse sosiale problemer er vel og bra, men kunnskap er kunnskap, selv om ingen sosiale problemer blir løst. Ikke for å glemme at det også gjerne er vanskelig å i dag konkret definere hva slags kunnskap som i fremtiden mulig kan bidra til å løse sosiale problemer, ja hva et sosialt problem i det hele tatt er. Det er kunnskapen i seg selv som bør ilegges et utilitaristisk preg, ikke kunnskapens samfunnsmessige anvendbarhet.</p>
-
-      <p>Det er kanskje først og fremst den norske sosiologen Vilhelm Aubert (1922–1988) som bør ha skylden for at den desidert største retningen innen norsk sosiologi i dag er problemorientert empirisme. Aubert er kjent for å være opptatt av viktigheten av strenge predikasjoner, sanseerfaring og generell nærhet til samfunnet. Problemene til sosiologien skulle stamme fra utenfor selve forskningsmiljøet, mente han (Kalleberg, 2000). Se eksempelvis dette sitatet:</p>
-
-      <blockquote><p>The aim is frequently to correct something that is unfortunate, dangerous, inefficient, unjust – or to support some existing condition which is threatened, such as stable democracy and rule of law (Aubert, 1985, s. 116, sitert i Kalleberg, 2000, s. 404–405).</p></blockquote>
-
-      <p>Dette er sjokkerende nok i seg selv. Ingen ønsker seg en abstrakt sosiologi totalt løsrevet fra virkeligheten, men det er også viktig å huske på at samfunnet først og fremst skal være et objekt for undersøkelse og ikke motsatt. Samfunnet skal ikke ha innflytelse over sosiologien sine valg av metoder, teorier eller forskningsspørsmål. I det minste ikke på en åpenbar måte.</p>
-
-      <p>Når sosiologisk forskning nærmest utelukkende reduseres ned til å kun omfavne et sterkt begrenset historisk og geografisk område, såkalte bindestrekssosiologier, er det ikke veldig overraskende at man sitter igjen med både fragmentering og en mangel på total forståelse av hva det sosiale faktisk innebærer. Historisk kjennetegnes jo sosiologien av at den tar for seg hva som skjer på tvers av tid og rom, på tvers av institusjoner og på tvers av sektorer, at den nettopp ikke sier seg fornøyd med å kun undersøke enkeltinstitusjoner eller enkeltsektorer.</p>
-
-      <h3>En lite produktiv definisjon</h3>
-
-      <p>Når det kommer til hva teori er, finner man en nokså vanlig og innarbeidet definisjon hos Jeffrey Alexander. Alexander (1987, s. 2) definerer teori som en generalisering adskilt fra detaljer, altså som en abstraksjon adskilt fra en konkret case. Problemet med en slik definisjon, som alt for mange ser ut til å se bort fra, er at beskrivelser av en konkret case, for eksempel hva presidenten i Chrysler gjør, konsekvent ikke blir definert som teori. Det er kun når man ser på hva presidenter i bilselskaper gjør, i flertall, at teori på magisk vis oppstår.</p>
-
-      <p>Så klart en beskrivelse av hva presidenten i Chrysler gjør er teori. Det er ikke mulig å hevde noe annet så lenge du ikke også tar til orde for at vi mennesker har en form for ikke-teoretisk «ren» tilgang til virkeligheten. Alexander sin definisjon legger begrensninger for teoriutvikling ved at han indirekte tar til orde for at man ikke skal kunne stille spørsmål omkring enkeltstående deler av virkeligheten. Hva presidenten i Chrysler gjør bør med andre ord tas for gitt.</p>
-
-      <p>Rent teoretisk bør den enkeltstående casen være like interessant som de mange. Et lite avvik er i utgangspunktet nok til å motbevise en hel teori. Når den teoretiske forståelsen derimot nærmest utelukkende defineres ut fra numerisk hyppighet, og ikke også ut fra de kvalitative egenskapene ved de enkeltstående delene, reduserer man det teoretiske ambisjonsnivået betraktelig. Resultatet er som oftest en utmagret teori skapt for å kunne muliggjøre en dekning av så mange som mulig. Små avvik blir sett på som uforståelige og avfeid som individuelle, eller enda verre, subjektive forskjeller.</p>
-
-      <p>Teoretisering handler altså ikke kun om numerisk hyppighet, men også om dens kvalitative innhold, altså selve tolkningen eller persepsjonen av det empiriske objektet. Den opprinnelige misnøyen mot «stor» teori var først og fremst rettet mot dens rigide egenrådige form og mangel på presisjon. Løsningen på dette er imidlertid ikke å slutte med teoriutvikling, men å finne bedre teoretiske løsninger.</p>
-
-      <h3>Teori eller empiri?</h3>
-
-      <p>Det er hovedsakelig utvikling av ny teori som fører faget sosiologi fremover. Slik jeg ser det er teori viktigere enn empiri i den forstand at teoretiske forståelser, uansett hvor uriktige de er, alltid vil tilby menneskeheten mer enn en fasit som ingen forstår. Dette betegner en realitet som vitenskapen aldri vil komme unna, uansett hvor mye den forsøker. Jo lavere abstraksjonsnivå man befinner seg på, jo mindre er det også mulig å forstå. Det kan godt være den teoretiske forståelsen man disponerer er totalt feil, men det representerer i det minste en forståelse, eller verdensanskuelse om du vil, og ikke et teoretisk tomrom.</p>
-
-      <p>Man kan gjerne, som empirikere ofte gjør, hevde at teori er meningsløs uten en fot i virkeligheten. Problemet er bare at det har en mening i den forstand at det representerer en de facto forståelse. Du kan si det er så meningsløst du bare vil, men det hjelper ikke når folk tror på det.<sup>1</sup> Det er også, blant annet derfor, teoriutvikling er så utrolig viktig. Man bør nemlig ikke si seg fornøyd med den teoretiske forståelsen man til enhver tid besitter.</p>
-
-      <p>Som Archer (1995, s. 30) blant annet har påpekt er det empiristiske synet på at kunnskap utelukkende oppnås gjennom sanseerfaringer beviselig feil. Mennesker som reflekterende vesener er ikke empirikere, snarere tvert imot, noe som innebærer at empirisme heller ikke er den tilstrekkelige måten å forstå mennesker på. Vi er nemlig langt mer enn enkle produkter av andre sine sanser.</p>
-
-      <p>Når sosiologien blir såpass empirisk ensrettet som den er i dag reduserer man aksjonsradiusen hvor det er mulig å stille kritiske og interessante spørsmål. Resultatet er som oftest en grå, kjedelig og forutsigbar vitenskapelig disiplin. Jeg er på ingen måte den første som sier det. Dette er ikke et problem som oppstod i går. Når skal det skje noe?</p>
-
-      <p>Mangel på teoriutvikling er dog ikke bare et norsk fenomen, men også et internasjonalt problem. Dagens generasjon sosiologer befinner seg i en svært annerledes verden enn sine forgjengere. Ideene bak det vi kaller moderne sosiologisk teori i dag, som eksempelvis fransk strukturalisme og poststrukturalisme som Bourdieu og Foucault, er over 50 år gamle (Lizardo, 2020). Moderne sosiologisk teori er knapt noe som eksisterer i det hele tatt.</p>
-
-      <p>Masterstudenter vil også i mange tilfeller bli frarådet å skrive rene teoretiske masteroppgaver i sosiologi, ofte også med ganske god grunn. Dette fordi man, dersom man er uheldig og blir tildelt «feil» sensor, kan risikere en svært svak karakter utelukkende fordi man har skrevet en ren teoretisk oppgave. Ikke for å glemme hvilken ulempe man setter seg selv i på arbeidsmarkedet når graden er fullført og oppgaven er levert. Det er jo ikke slik at det akkurat flommer over av vitenskapelige posisjoner for teoriinteresserte sosiologer. Selv høyt anselige vitenskapelige institutter har i dag problemer med å se verdien i teoretisk kompetanse.</p>
-
-      <h3>Sosiologi i praksis</h3>
-
-      <p>Det skal sies at den gjengse empiriker på ingen måte opererer uten teoretiske begreper og kategorier i utforskningen av den empiriske verden. Utfordringen er likevel at man ofte må ta disse begrepene og kategoriene for gitt for at empirisk forskning i det hele tatt skal være mulig. Man kan nemlig ikke problematisere alt. En teoretiker derimot har ikke de samme begrensningene.</p>
-
-      <p>Men empiri kan jo brukes til å falsifisere teoretiske antagelser? Ja, absolutt. Problemet er bare at man svært sjeldent erstatter det teoretiske tomrommet som naturlig nok må oppstå i kjølvannet av enhver falsifisering. Intensjonen er jo som oftest ikke å konstruere en ny og forbedret helhetlig teoretisk forståelse, men å identifisere hull ved den bestående forståelsen.</p>
-
-      <p>En såkalt abduktiv tilnærming, med fokus på produktive anomalier, slik den skisseres hos Vassenden (2018), kan sees på som en delvis løsning. Dette fordi fokuset eksplisitt er på den teoretiske erkjennelsen. Det er også en slik tilnærming jeg selv mener man bør ta i bruk når det kommer til ren teoriutvikling. Dette fordi man aktivt søker å forbedre og erstatte de bestående teoretiske antagelsene man til enhver tid besitter, i motsetning til å kun falsifisere dem. Som Swedberg (2016) sier: før teori kommer teoretisering.</p>
-
-      <p>Jeg mener sosiologien bør legge til rette for at man skal kunne stille interessante, intrikate og dristige spørsmål ved det mest sosialt grunnleggende. Dagens paradigme hindrer dette i stor grad. Målet er jo ny erkjennelse, ny viten. Mange vil kanskje si det er mot vitenskapens etos, men jeg er nok ikke den første som har tatt meg selv i å si «dette visste jeg fra før» etter å ha lest empirisk forskning.</p>
-
-      <p>Det er således langt på overtid at vi snakker om verdien av vitenskap, dens grad av originalitet og nyskapenhet. Vi publiserer som aldri før, men får vi bedre kvalitet av det? De økende kravene til publisering og sitering er empirismens beste håndlanger. Teoretikere trenger nemlig tid, mye tid. Originalitet belønnes, etter min mening, ikke i tilstrekkelig grad. Dagens tellekantsystem og finansieringsordninger med fokus på oppdragsforskning og ekstern finansiering favoriserer ikke bare empirisk forskning over teoriutvikling, men også produksjon over kvalitet. Ny viten er noe som må skapes, ikke noe man kan planlegge for så å bare gjøre. Dette gjelder like mye empirisk forskning som teoriutvikling. For at dette skal være mulig trenger man tid, kreativitet og ikke minst forskningsfrihet.</p>
-
-      <p>At det i det hele tatt i Norge i 2022 er behov for å understreke viktigheten av teori i en vitenskapelig disiplin som sosiologi i en kronikk som dette er trist og burde ikke være nødvendig. Jeg mener på ingen måte at vi bør slutte med empirisk forskning, men at teori og teoriutvikling bør være en særs viktig del av enhver vitenskapelig disiplin som ønsker å bli tatt seriøst. Sosiologer bør ikke reduseres til enkle samfunnsforskere. Vi er mye mer enn det.</p>
-
-      <div class="fot">
-        <p>Takk til Sivert Skålvoll Urstad og Gunnar Helle for kommentarer til kronikken.</p>
-        <p>1. Dette må imidlertid ikke sees på som et argument mot empirisk etterprøving, men heller som et argument for teoriutvikling.</p>
-        <p>Referanser: Aakvaag (2008, 2010), Alexander (1987), Archer (1995), Forskningsrådet (2010, 2018), Hagen og Gudmundsen (2011), Kalleberg (2000), Lizardo (2020), Swedberg (2012, 2016), Vassenden (2018). Fullstendig referanseliste i <a href="https://sosiologen.no/debatt/den-teorilose-sosiologien/" target="_blank" rel="noopener noreferrer">originalen hos Sosiologen</a>.</p>
-      </div>
-    </article>
-
-    <article class="tekst" id="eggehvite-og-eggeplomme">
-      <h2>Eggehvite og eggeplomme</h2>
-      <p class="kilde">2022. Sosiologen, innlegg.</p>
-
-      <p class="ingress">Svar på Henriette Lauvhaug Nybakke og Stine Agnete Ingebrigtsen sin kritikk av kronikken «Den teoriløse sosiologien».</p>
-
-      <p>I sitt <a href="https://sosiologen.no/debatt/har-teori-mer-verdi-enn-empiri/" target="_blank" rel="noopener noreferrer">motsvar</a> til kronikken min uttrykker stipendiatene Henriette Lauvhaug Nybakke og Stine Agnete Ingebrigtsen at de ble provoserte over det de karakteriserer som <em>en nådeløs kritikk av den problemorienterte empirismen og bindestrekssosiologien</em>. Til dette vil jeg si at jeg setter stor pris på engasjementet deres og for at kronikken min faktisk klarte å vekke litt følelser og ikke ble forbigått i stillhet. Dette er likevel det eneste ved teksten deres jeg klarer å sette pris på.</p>
-
-      <p>Nybakke og Ingebrigtsen reagerer blant annet på at jeg stiller teori og empiri opp mot hverandre som om det er en konkurranse. Men er det ikke det da? Teori står jo til soleklart tap? Hvor mange sosiologer er det i dag som arbeider med teoriutvikling? Empirikerne vinner på alle mulige kalkulerbare parametere. Det er bare å gratulere.</p>
-
-      <p>Nybakke og Ingebrigtsen peker videre på at vi trenger både teori og empiri. No shit, Sherlock? Jeg har aldri tatt til orde for at sosiologi kun bør bestå av teori. For å fortsette på deres metafor: <em>det blir ikke et helt egg uten eggehvite og eggeplomme, selv om du liker eggehviten best</em>. Sett bort fra det åpenbare faktum at teori selvsagt burde få æren av å få være den mer spennende og fargerike eggeplommen, og ikke bli tildelt den kjedelige og litt trauste eggehviten, er jeg på ingen måte uenig i dette.</p>
-
-      <p>Utfordringen er bare at det i dag knapt eksisterer eggehvite, altså teori eller teoriutvikling, i det hele tatt. Vi drukner nemlig i empiri. En slik idealistisk og virkelighetsfjern relativisering, som jeg opplever at Nybakke og Ingebrigtsen holder på med i sitt motsvar, hadde gjort selv det franske borgerskapet stolt. Kronikken min var ment som et aktivistisk bidrag og som en kritikk av den faktiske tilstanden innad norsk sosiologi anno 2022, og ikke som et bidrag i en metadiskusjon à la teori versus empiri.</p>
-
-      <p>«Hvis en slavisk følger den ene uten å inkludere den andre går en glipp av noe», skriver Nybakke og Ingebrigtsen. Helt enig. Der empiriløs teori er tom og teoriløs empiri er blind, er det vel ikke urimelig å karakterisere norsk sosiologi som i alle fall litt svaksynt?<sup>1</sup></p>
-
-      <p>Relativiseringen til Nybakke og Ingebrigtsen stopper imidlertid ikke der. De spør seg også om ikke hva som er interessant for et fagfelt til en viss grad er subjektivt. <em>Hvem</em> skal ha den makten, spør de. Hørte jeg riktig? Hvem? Den makten skal selvsagt tilfalle det beste faglige argumentet. <em>Hvem</em> som kommer med dette, bør være totalt irrelevant.</p>
-
-      <p>Det overrasker meg videre at Nybakke og Ingebrigtsen anser abstrakte teorier som mer forvirrende enn å finne frem i mylderet av motsigende konkrete empiriske resultater. Men hver sin smak.</p>
-
-      <p>Jeg kan dog langt på vei si meg enig med Nybakke og Ingebrigtsen i deres antydning, slik jeg tolker det, at teoriutvikling innebærer stor fallhøyde. Det er riktig at det ofte er en tynn linje mellom genialitet og galskap. Likevel, det betyr ikke at vi bør frastå fra å begi oss ut på en slik risikabel og eksotisk utflukt. Det er jo nettopp her potensialet ligger. Nybakke og Ingebrigtsen virker derimot å heller foretrekke å sitte hjemme i trygge omgivelser og skåle til middelmådigheten. Igjen, hver sin smak.</p>
-
-      <p>Nybakke og Ingebrigtsen tar også til orde for at det ikke er noen forskjell mellom disiplinrelevante forskningsspørsmål og forskningsspørsmål som først og fremst søker å løse konkrete sosiale problemer.</p>
-
-      <p>«Sosiologi er læren om samfunnet», skriver de. Jasså? Samfunnsvitenskap er kanskje læren om samfunnet. Sosiologi derimot, er fundert på ideen om at det er noe særegent ved det sosiale som skiller seg fra eksempelvis det psykologiske eller det biologiske. Sosiologer sin hovedoppgave er således, etter min mening, å bidra til en utvidet forståelse av det sosiale, ikke å skape en bedre verden. Vi er ikke politikere. Selvsagt, en tilstrekkelig tro på vitenskapelig kunnskap vil alltid, med litt velvilje, kunne tolkes som et samfunnsmessig gode.</p>
-
-      <h3>Den problemorienterte empirismen og bindestrekssosiologien</h3>
-
-      <p>Nybakke og Ingebrigtsen hevder videre at bindestrekssosiologien bidrar til å skape en helhetlig forståelse av det sosiale. På hvilken måte da? Jeg forstår ikke hvordan dette er mulig å hevde. Det er først og fremst sosiologer hvis kjennetegn <em>ikke</em> konsentrerer seg kun om isolerte bindestreker, men tar for seg det <em>generelle</em> ved det sosiale, som eksempelvis Bourdieu, Habermas, Giddens, Foucault, Durkheim, Marx, Weber, Merton, Parsons, Berger og Luckmann, Beck og Elster, som utvilsomt har bidratt mest til faget sosiologi som helhet.</p>
-
-      <p>Nybakke og Ingebrigtsen skriver også at de ønsker en begrunnelse på hvorfor forskningen i norsk sosiologi ikke er viktig for sosiologifaget. Slik jeg skrev i kronikken min skyldes dette, for det første, at «norsk sosiologi», slik den er utformet i dag, nærmest utelukkende består av en form for problemorientert empirisme som har liten eller ingen innflytelse på sosiologisk teoriutvikling. For det andre er den svært praksisrettet, grunnet oppdragsforskningens natur, altså er kunnskapen som oftest utformet på en slik måte at velferdsstaten Norge skal kunne ta politiske beslutninger på grunnlag av nettopp denne kunnskapen. Staten Norge sin hovedprioritet er ikke sosiologi, forståelig nok.</p>
-
-      <p>For å bruke en referanse de fleste sosiologer kjenner til. Sosiologisk kunnskap <em>ovenfra og ned</em> kan være relevant og bidra innenfor mange ulike forskningsfelt. Absolutt. Det viser blant annet Nybakke og Ingebrigtsen selv med sin forskning på legemiddelhåndtering. Likevel, det betyr ikke at den nevnte forskningen alltid vil ha en tilbakevirkende kraft <em>nedenfra og opp</em> på den sosiologiske kunnskapen i seg selv. Snarere tvert imot. Det er nettopp en slik kraft jeg i min kronikk etterlyser i større grad.</p>
-
-      <p>Det skal sies at jeg ikke mener at dette alltid må være en målsetning. Sosiologer trenger ikke å hele tiden arbeide med superrelevante sosiologiske problemstillinger. Jeg skulle bare ønske at flere gjorde det, litt oftere.</p>
-
-      <h3>Mangel på kritiske spørsmål</h3>
-
-      <p>Nybakke og Ingebrigtsen lurer også på hvilken måte empirinær sosiologi begrenser kritiske spørsmål. Empirinær sosiologi, slik den er i dag, begrenser for det første kritiske spørsmål ved at den kun tar for seg et svært begrenset historisk og geografisk område. Kritiske spørsmål sin aksjonsradius er på den måten åpenbart redusert. Det vil være absurd å hevde noe annet. For det andre reduserer empirinær sosiologi kritiske spørsmål ved at hva som konkret sees på som tilstrekkelig for å kunne tilfredsstille kravene til såkalt «ny forskning» er langt lavere. Din empiri vil på en måte alltid være din empiri, og du vil alltid kunne støtte deg på at ingen andre enn kun deg har studert akkurat denne seksjonen av tid og rom. Dette fordrer latskap, enkle svar og produksjon over kunnskapsutvikling. Å kunne stå imot slike strukturelle insentiver krever en helt ekstraordinær individuell innsats. Jeg sier ikke at det er umulig. Det er bare svært utfordrende.</p>
-
-      <p>For det tredje handler det om synet på kunnskap. Her skal jeg prøve å være kort. Hvordan empirikere, til forskjell fra teoretikere, i større grad er tvunget til å bruke dyrebar tid og energi på å kvalitetssikre eller å gjøre rede for vurderingen av sitt forskningsobjekt fremfor å faktisk kritisk vurdere sitt forskningsobjekt. Hvordan man i tradisjonen etter Popper valgte å heller ta i bruk falsifikasjon over verifikasjon, slik at man i større grad støttet seg på ferdig utarbeidede metodiske manualer fremfor individuell rasjonalitet og logikk. Hvordan empirisk forskning i lys av sin eksistens som oftest må anta et epistemisk naivt standpunkt der empiri helliggjøres som et, i alle fall delvis, ikke-teoretisk faktum. Og hvordan empirisk forskning i alt for stor grad antar at alt som kan forstås kun kan forstås gjennom egne sanser og personlig erfaring fremfor fornuft og tenkning. Ja, hvordan den observerbare empiriske virkeligheten bokstavelig talt er mindre enn den teoretiske.</p>
-
-      <p>Nybakke og Ingebrigtsen skriver til slutt at de ikke ønsker en ugunstig splittelse mellom teoretikere og empirikere, og at man heller bør dra nytte av hverandres forståelser og arbeid. Dette er ikke mindre enn fantastiske nyheter. Da kan jeg endelig slå meg til ro med at utbyttingen omsider er over, og at empirikerne fremover skal bidra like mye til teoriutvikling som teoretikerne historisk har bidratt til empirisk forskning.</p>
-
-      <p>Med vennlig hilsen<br>En nonsjalant skrivebordssosiolog</p>
-
-      <div class="fot">
-        <p>1. Aakvaag, G. C. (2008). <em>Moderne sosiologisk teori</em>. Abstrakt forlag.</p>
-      </div>
-    </article>
-
+    <div id="tekstholder"></div>
   </div>
 
   </div><!-- /rail -->
@@ -617,7 +240,6 @@ hr{ border:0; border-top:1px solid var(--strek); margin:0 0 2.6em }
 const stage   = document.getElementById('stage');
 const forside = document.getElementById('forside');
 const reader  = document.getElementById('reader');
-const tekster = [...reader.querySelectorAll('.tekst')];
 const items   = [...document.querySelectorAll('.trigger')];
 let aapen = null;        // åpent panel
 let leser = null;        // åpen tekst
@@ -671,18 +293,22 @@ items.forEach(knapp => {
 /* ---------- Leseren ----------
    Én bevegelse: kolonnen med forsiden og teksten flyttes opp med
    nøyaktig forsidens høyde. Når den er fremme, fjernes forsiden og
-   forskyvningen i samme øyeblikk, så teksten blir stående der den er. */
-const rail = document.getElementById('rail');
+   forskyvningen i samme øyeblikk, så teksten blir stående der den er.
+
+   Teksten hentes fra sin egen fil i tekster/, slik at hver tekst har
+   en ekte adresse som Google kan indeksere for seg. Feiler hentingen,
+   for eksempel hvis siden åpnes som en løs fil uten server, følges
+   lenken på vanlig måte i stedet. */
+const rail   = document.getElementById('rail');
+const holder = document.getElementById('tekstholder');
+const hentet = {};                      // husker tekster som alt er lastet
 
 function settSkinne(y, med){
   rail.style.transition = med ? '' : 'none';
   rail.style.transform  = y === null ? '' : 'translateY(' + y + 'px)';
-  if (!med) rail.offsetHeight;               // tvinger nettleseren til å ta det med en gang
+  if (!med) rail.offsetHeight;
 }
 
-/* Kjører opprydningen i det bevegelsen faktisk er ferdig, ikke etter en
-   klokke som kan bomme med noen millisekunder. Timeren er bare en
-   sikkerhet hvis transitionend aldri kommer. */
 function naarFerdig(fn){
   let gjort = false;
   const kjor = e => {
@@ -696,25 +322,25 @@ function naarFerdig(fn){
   setTimeout(kjor, 800);
 }
 
-/* Desimalpresis høyde. offsetHeight runder til hele piksler, og da
-   stemmer ikke avstanden med det som fjernes etterpå. */
 function hoyde(el){ return el.getBoundingClientRect().height; }
 
-function visTekst(id){
-  const t = tekster.find(a => a.id === id);
-  if (!t || leser) return false;
+async function hentTekst(url){
+  if (hentet[url]) return hentet[url];
+  const svar = await fetch(url);
+  if (!svar.ok) throw new Error('fant ikke ' + url);
+  const doc = new DOMParser().parseFromString(await svar.text(), 'text/html');
+  const art = doc.querySelector('article.tekst');
+  if (!art) throw new Error('ingen tekst i ' + url);
+  hentet[url] = art.outerHTML;
+  return hentet[url];
+}
 
-  window.scrollTo(0, 0);
-  tekster.forEach(a => a.classList.toggle('vises', a === t));
-  reader.classList.add('vises');
-  stage.classList.add('open');
-
+function apneSkinne(){
   const topp = 40;
   const h    = hoyde(forside);
   const vei  = Math.max(window.innerHeight - topp, h + topp);
 
   reader.style.marginTop = (vei - h) + 'px';
-
   document.body.style.overflow = 'hidden';
   settSkinne(0, false);
   requestAnimationFrame(() => settSkinne(-vei, true));
@@ -726,23 +352,38 @@ function visTekst(id){
     settSkinne(null, false);
     settSkinne(null, true);
   });
+}
 
-  /* Fokus til overskriften, ellers står skjermleseren igjen på forsiden
-     som nettopp forsvant. tabindex="-1" gjør at den kan få fokus uten
-     å havne i tabrekkefølgen. */
-  const tittel = t.querySelector('h2');
+async function visTekst(url){
+  if (leser) return false;
+  let kode;
+  try { kode = await hentTekst(url); }
+  catch (e) { return false; }          // lar lenken gå som vanlig
+
+  holder.innerHTML = kode;
+  const art = holder.querySelector('article.tekst');
+  if (art) art.classList.add('vises');
+
+  window.scrollTo(0, 0);
+  reader.classList.add('vises');
+  stage.classList.add('open');
+  apneSkinne();
+
+  const tittel = holder.querySelector('h2');
   if (tittel){
     tittel.setAttribute('tabindex','-1');
     setTimeout(() => tittel.focus({ preventScroll:true }), 60);
+    document.title = tittel.textContent + ' — Ørjan Arnevig Samuelsen';
   }
 
-  leser = id;
+  leser = url;
   return true;
 }
 
 function skjulTekst(){
   if (!leser) return;
   leser = null;
+  document.title = 'Ørjan Arnevig Samuelsen';
 
   window.scrollTo(0, 0);
   forside.style.display = '';
@@ -759,27 +400,30 @@ function skjulTekst(){
   naarFerdig(() => {
     reader.classList.remove('vises');
     reader.style.marginTop = '0px';
-    const t = items.find(k => k.getAttribute('aria-controls') === 'p-tekst');
-    if (t) t.focus();
+    holder.innerHTML = '';
     document.body.style.overflow = '';
     settSkinne(null, false);
     settSkinne(null, true);
   });
 }
 
-/* Adressen brukes hvis nettleseren tillater det. I sandkasser uten
-   egen adresse hoppes den delen over, og alt annet virker som før. */
+
+/* Adressen settes til den ekte filbanen, så nettleserens tilbakeknapp
+   virker og lenken kan deles. Er History-API-et sperret, som i enkelte
+   sandkasser, hoppes den delen over og leseren virker likevel. */
 let kanHistorikk = true;
 try { history.replaceState(history.state, '', location.href); }
 catch (e) { kanHistorikk = false; }
 let pushet = false;
 
-function aapneTekst(id){
-  if (!visTekst(id)) return;
+async function aapneTekst(url){
+  const ok = await visTekst(url);
+  if (!ok) return false;
   if (kanHistorikk){
-    try { history.pushState({ tekst:id }, '', '#' + id); pushet = true; }
+    try { history.pushState({ tekst:url }, '', url); pushet = true; }
     catch (e) { kanHistorikk = false; }
   }
+  return true;
 }
 
 function lukkTekst(){
@@ -787,36 +431,28 @@ function lukkTekst(){
   if (pushet){ pushet = false; history.back(); return; }
   skjulTekst();
   if (kanHistorikk){
-    try { history.replaceState(null, '', location.pathname + location.search); }
-    catch (e) {}
+    try { history.replaceState(null, '', '/'); } catch (e) {}
   }
 }
 
-window.addEventListener('popstate', () => {
-  const id = (location.hash || '').slice(1);
-  if (id && tekster.some(t => t.id === id)){ visTekst(id); pushet = true; }
+window.addEventListener('popstate', e => {
+  const url = e.state && e.state.tekst;
+  if (url){ visTekst(url); pushet = true; }
   else { pushet = false; skjulTekst(); }
 });
 
-document.querySelectorAll('.lenke[data-tekst]').forEach(b => {
-  b.addEventListener('click', () => aapneTekst(b.dataset.tekst));
+/* Klikk på en tekst: prøv å hente den inn. Går det ikke, følges
+   lenken som en helt vanlig lenke til den ekte siden. */
+document.querySelectorAll('a.lenke[href]').forEach(a => {
+  a.addEventListener('click', async e => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    const ok = await aapneTekst(a.getAttribute('href'));
+    if (!ok) window.location.href = a.getAttribute('href');
+  });
 });
 
 document.getElementById('tilbake').addEventListener('click', lukkTekst);
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && leser){ lukkTekst(); return; }
-  if (e.key === 'Escape' && aapen){
-    const knapp = items.find(k => k.getAttribute('aria-controls') === aapen.id);
-    lukkPanel(aapen, knapp);
-    stage.classList.remove('open');
-    aapen = null;
-  }
-});
-
-/* Åpne med en gang hvis adressen alt peker på en tekst */
-const start = (location.hash || '').slice(1);
-if (start && tekster.some(t => t.id === start)) visTekst(start);
 </script>
 
 </body>
