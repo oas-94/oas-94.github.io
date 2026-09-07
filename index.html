@@ -386,15 +386,33 @@ function skjulTekst(){
   document.title = 'Ørjan Arnevig Samuelsen';
 
   window.scrollTo(0, 0);
+
+  /* Lukk panelet og senk forsiden tilbake til midten mens den fortsatt
+     er utenfor skjermen. Uten overgang, så det ikke blir en bevegelse
+     til ved siden av den vi holder på med. */
+  stage.style.transition = 'none';
+  if (aapen){
+    const knapp = items.find(k => k.getAttribute('aria-controls') === aapen.id);
+    if (knapp) knapp.setAttribute('aria-expanded','false');
+    aapen.classList.remove('shown','showing');
+    aapen.hidden = true;
+    aapen = null;
+  }
+  stage.classList.remove('open');
   forside.style.display = '';
+  stage.offsetHeight;                       // tvinger ny beregning nå
 
-  const topp = 40;
-  const h    = hoyde(forside);
-  const vei  = Math.max(window.innerHeight - topp, h + topp);
+  /* Mål hvor forsiden havner i sin hvilestilling, og regn ut hvor langt
+     kolonnen må stå forskjøvet for at teksten skal bli stående i ro. */
+  const topp   = 40;
+  const railY  = rail.getBoundingClientRect().top;
+  const h      = hoyde(forside);
+  const mt     = Math.max(0, window.innerHeight - railY - h);
+  const start  = topp - (railY + h + mt);
 
+  reader.style.marginTop = mt + 'px';
   document.body.style.overflow = 'hidden';
-  reader.style.marginTop = (vei - h) + 'px';
-  settSkinne(-vei, false);
+  settSkinne(start, false);
   requestAnimationFrame(() => settSkinne(0, true));
 
   naarFerdig(() => {
@@ -402,8 +420,11 @@ function skjulTekst(){
     reader.style.marginTop = '0px';
     holder.innerHTML = '';
     document.body.style.overflow = '';
+    stage.style.transition = '';
     settSkinne(null, false);
     settSkinne(null, true);
+    const t = items.find(k => k.getAttribute('aria-controls') === 'p-tekst');
+    if (t) t.focus();
   });
 }
 
