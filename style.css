@@ -264,3 +264,12 @@ hr{ border:0; border-top:1px solid var(--strek); margin:0 0 2.6em }
   text-decoration:none;
 }
 .stage.enkelttekst .tekst{ display:block }
+
+/* Utdrag under hver tekst i listen. Settes inn av koden. */
+.utdrag{
+  margin:.35em 0 0;
+  color:var(--gra);
+  font-size:13px;
+  line-height:1.6;
+  max-width:52ch;
+}
