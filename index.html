@@ -80,6 +80,12 @@
         </svg>
         NIFU</a></li>
 
+      <li><a href="https://mastodon.social/@orjansamuelsen" rel="me noopener noreferrer" target="_blank">
+        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true" fill-rule="evenodd">
+          <path d="M12 1.5c5 0 8.5 2.4 8.5 7.8 0 3.2-.4 6.1-2 7.4-1.5 1.2-3.8 1.4-6.4 1.4-2 0-4-.2-4-.2v1.9c0 .8.6 1 1.5 1h3v1.8H9C5.5 22.6 3.5 20.8 3.5 17V9.3c0-5.4 3.5-7.8 8.5-7.8zM7 6.5v6h1.8V8.9c0-.9.4-1.3 1.1-1.3.8 0 1.2.5 1.2 1.5v3.4h1.8V9.1c0-1 .4-1.5 1.2-1.5.7 0 1.1.4 1.1 1.3v3.6H17V8.7c0-1.5-.8-2.3-2.2-2.3-1 0-1.7.4-2.1 1.1-.4-.7-1.1-1.1-2-1.1-.9 0-1.5.3-1.9 1v-.9z"/>
+        </svg>
+        Mastodon</a></li>
+
     </ul>
 
     <ul class="actions">
@@ -278,6 +284,7 @@ items.forEach(knapp => {
     /* Bytte fra et annet panel: lukk det gamle helt, så åpne det nye */
     if (aapen){
       const forrige = items.find(k => k.getAttribute('aria-controls') === aapen.id);
+      if (panel.id === 'p-tekst') fyllUtdrag();
       lukkPanel(aapen, forrige, () => aapnePanel(panel, knapp));
       aapen = panel;
       return;
@@ -286,6 +293,7 @@ items.forEach(knapp => {
     /* Første åpning: menyen flytter seg først, teksten kommer etter */
     stage.classList.add('open');
     aapen = panel;
+    if (panel.id === 'p-tekst') fyllUtdrag();
     setTimeout(() => aapnePanel(panel, knapp), 340);
   });
 });
@@ -474,6 +482,42 @@ document.querySelectorAll('a.lenke[href]').forEach(a => {
 });
 
 document.getElementById('tilbake').addEventListener('click', lukkTekst);
+
+/* ---------- Utdrag i Tekster-listen ----------
+   Henter første avsnitt fra hver tekstfil og setter det inn under
+   kilden. Gjøres første gang panelet åpnes, ikke ved sidelasting,
+   så forsiden laster like fort som før. Legger du til en ny tekst,
+   kommer utdraget av seg selv. */
+const UTDRAG_LENGDE = 150;
+
+function kortNed(t, maks){
+  t = t.replace(/\s+/g, ' ').trim();
+  if (t.length <= maks) return t;
+  const kutt = t.slice(0, maks);
+  const sisteMellomrom = kutt.lastIndexOf(' ');
+  return kutt.slice(0, sisteMellomrom > 0 ? sisteMellomrom : maks).replace(/[.,;:]$/, '') + ' …';
+}
+
+async function fyllUtdrag(){
+  const panel = document.getElementById('p-tekst');
+  if (panel.dataset.utdrag) return;
+  panel.dataset.utdrag = '1';
+
+  for (const a of panel.querySelectorAll('a.lenke[href]')){
+    try {
+      const kode = await hentTekst(a.getAttribute('href'));
+      const doc  = new DOMParser().parseFromString(kode, 'text/html');
+      const p    = doc.querySelector('p.ingress') ||
+                   [...doc.querySelectorAll('p')].find(x => !x.classList.contains('kilde'));
+      if (!p) continue;
+
+      const ut = document.createElement('p');
+      ut.className = 'utdrag';
+      ut.textContent = kortNed(p.textContent, UTDRAG_LENGDE);
+      a.closest('.pub').appendChild(ut);
+    } catch (e) { /* uten server får vi ingen utdrag, og det er greit */ }
+  }
+}
 </script>
 
 </body>
