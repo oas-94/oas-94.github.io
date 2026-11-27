@@ -132,6 +132,7 @@ label.valg{font-size:12.5px;color:var(--gra);margin-left:8px;display:inline-flex
       <div class="helt" id="total">–</div>
       <div class="endring" id="totalEndring"></div>
       <div class="merknad" id="totalMerknad"></div>
+      <div class="endring" id="unike"></div>
     </div>
     <div class="fordeling">
       <div class="helt-merke">Fordeling på plattformene</div>
@@ -413,7 +414,12 @@ function visTopp() {
   document.getElementById("totalEndring").innerHTML = maalt
     ? `<span class="${klasse(d)}">${tegn(d)}</span> ${periodeNavn()}` + (harForrige && S.periode ? ` <span class="liten">· forrige periode ${tegn(forrige)}</span>` : "")
     : "";
-  document.getElementById("totalMerknad").textContent = (maalt < antall ? `${maalt} av ${antall} plattformer målt. ` : "") + "Samme person teller én gang per plattform."
+  document.getElementById("totalMerknad").textContent = (maalt < antall ? `${maalt} av ${antall} plattformer målt. ` : "") + "Samlet publikum teller samme person én gang per plattform."
+  // Unike personer: samlet minus dem som er funnet på flere plattformer (sammenstilt på PC-en, navnene publiseres ikke)
+  if (D.unike && maalt) {
+    const u = sum - D.unike.overlapp;
+    document.getElementById("unike").innerHTML = `<b>≈ ${nf.format(u)}</b> unike personer <span class="liten">· ${nf.format(D.unike.paa_flere)} følger deg flere steder (funnet på navn, så et anslag)</span>`;
+  }
   const fe = document.getElementById("fordeling");
   fe.innerHTML = deler.map(([pl, v]) => {
     const andel = v / sum * 100;
@@ -589,10 +595,10 @@ function alt() {
 }
 
 async function start() {
-  const [sky, edge, hist, isky, iedge, sch, sche, ssky, sedge, folg] = await Promise.all([
+  const [sky, edge, hist, isky, iedge, sch, sche, ssky, sedge, folg, unike] = await Promise.all([
     hentTekst("sky.csv"), hentTekst("edge.csv"), hentTekst("historikk.csv"),
     hentJson("innlegg_sky.json"), hentJson("innlegg_edge.json"), hentJson("scholar_sky.json"), hentJson("scholar_edge.json"),
-    hentJson("status_sky.json"), hentJson("status_edge.json"), hentJson("folgere_sky.json"),
+    hentJson("status_sky.json"), hentJson("status_edge.json"), hentJson("folgere_sky.json"), hentJson("unike.json"),
   ]);
   const rader = [...lesCsv(hist), ...lesCsv(sky), ...lesCsv(edge)];
   for (const r of rader) {
@@ -614,6 +620,7 @@ async function start() {
   D.innlegg = [...innl.values()];
   D.scholar = [sch, sche].filter(Boolean).sort((a, b) => (b.tid || "").localeCompare(a.tid || ""))[0] || null;
   D.folgere = folg || {};
+  D.unike = unike;
   for (const [pl, st] of Object.entries(sedge || {})) D.status[pl] = st;
   if (ssky && ssky.feil) for (const f of ssky.feil) { const pl = f.split(":")[0]; if (pl !== "scholar") D.status[pl] = { ok: false, melding: f.slice(pl.length + 1).trim() }; }
   beregnInnlegg();
