@@ -189,11 +189,13 @@ const P = {
   facebook:  { navn: "Facebook",  farge: "#6a4ce2", hoved: "venner", enhet: "venner", andre: [["folgere", "følgere"]], kilde: "Edge-utvidelsen",
     rek: "Rekonstruert fra datoen hver nåværende venn ble venn (dataeksport). Venner som er fjernet, er ikke med, så kurven er et minimum.", lenke: "https://www.facebook.com/" },
   instagram: { navn: "Instagram", farge: "#ee7fac", hoved: "folgere", enhet: "følgere", andre: [["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Edge-utvidelsen", lenke: "https://www.instagram.com/", lys: true },
+  x:         { navn: "X",         farge: "#f47230", hoved: "folgere", enhet: "følgere", andre: [["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Edge-utvidelsen", lenke: "https://x.com/orjansamuelsen", lys: true },
   bluesky:   { navn: "Bluesky",   farge: "#00b894", hoved: "folgere_aktive", enhet: "aktive følgere", andre: [["folgere", "i profilen"], ["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Åpent API, fra Edge og skyen", lenke: "https://bsky.app/profile/orjansamuelsen.no", lys: true },
   mastodon:  { navn: "Mastodon",  farge: "#f2a600", hoved: "folgere", enhet: "følgere", andre: [["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Åpent API, fra Edge og skyen", lenke: "https://mastodon.social/@orjansamuelsen", lys: true },
+  researchgate: { navn: "ResearchGate", farge: "#ec4647", hoved: "folgere", enhet: "følgere", andre: [["lesninger", "lesninger"], ["siteringer", "siteringer"], ["folger", "følger selv"]], kilde: "Edge-utvidelsen", lenke: "https://www.researchgate.net/profile/Orjan-Samuelsen-2", ikkePublikum: true },
   scholar:   { navn: "Scholar",   farge: "#008a17", hoved: "siteringer", enhet: "siteringer", andre: [["h_indeks", "h-indeks"], ["i10_indeks", "i10"], ["publikasjoner", "publikasjoner"]], kilde: "Edge-utvidelsen (Google sperrer skyen)", lenke: "https://scholar.google.com/citations?user=1qEn9ZQAAAAJ", ikkePublikum: true },
 };
-const REKKEFOLGE = ["linkedin", "facebook", "instagram", "bluesky", "mastodon", "scholar"];
+const REKKEFOLGE = ["linkedin", "facebook", "instagram", "x", "bluesky", "mastodon", "researchgate", "scholar"];
 const PERIODER = [["7 d", 7], ["30 d", 30], ["90 d", 90], ["1 år", 365], ["Alt", null]];
 const DAG = 864e5;
 const NAA = Date.now();
@@ -601,7 +603,9 @@ async function start() {
     const s = D.serier[pl][m].sort((a, b) => a.t - b.t);
     // Rekonstruert historikk gjelder bare før første faktiske måling
     const forsteEkte = s.find((p) => p.kilde !== "rekonstruert");
-    D.serier[pl][m] = rens(forsteEkte ? s.filter((p) => p.kilde !== "rekonstruert" || p.t < forsteEkte.t) : s);
+    const ss = forsteEkte ? s.filter((p) => p.kilde !== "rekonstruert" || p.t < forsteEkte.t) : s;
+    if (forsteEkte) for (const p of ss) if (p.kilde === "rekonstruert" && p.v > forsteEkte.v) p.v = forsteEkte.v;
+    D.serier[pl][m] = rens(ss);
   }
   // Samme innlegg kan komme fra både skyen og Edge; siste kilde (Edge) vinner
   const innl = new Map();
