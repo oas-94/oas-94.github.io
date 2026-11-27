@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Mine tall</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#ffffff">
+<style>
+:root{
+  color-scheme: light only;
+  --papir:#ffffff; --plan:#f7f7f7; --blekk:#111111; --gra:#6a6a6a; --svak:#9a9a9a;
+  --strek:#e4e4e4; --akse:#c2c2c2; --bla:#0000ee;
+  --opp:#006c10; --ned:#b3261e; --advarsel:#8a5a00;
+  --mono:'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+}
+*{box-sizing:border-box}
+html,body{background:var(--papir);color:var(--blekk);margin:0}
+body{font-family:var(--mono);font-size:14px;line-height:1.55;-webkit-text-size-adjust:100%}
+a{color:var(--bla)}
+.side{max-width:1200px;margin:0 auto;padding:28px 24px 80px}
+header{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between;margin-bottom:28px}
+h1{font-size:20px;font-weight:600;margin:0}
+.under{color:var(--gra);font-size:12.5px;margin-top:2px}
+h2{font-size:15px;font-weight:600;margin:48px 0 4px}
+.h2under{color:var(--gra);font-size:12.5px;margin:0 0 16px}
+.perioder{display:flex;gap:4px;flex-wrap:wrap}
+.perioder button,.faner button,.filter button{font:inherit;font-size:13px;border:1px solid var(--strek);background:var(--papir);color:var(--blekk);padding:5px 11px;border-radius:999px;cursor:pointer}
+.perioder button:hover,.faner button:hover,.filter button:hover{background:var(--plan)}
+.perioder button[aria-pressed=true],.faner button[aria-pressed=true],.filter button[aria-pressed=true]{background:var(--blekk);color:var(--papir);border-color:var(--blekk)}
+.prikk{display:inline-block;width:9px;height:9px;border-radius:50%;flex:none}
+
+/* Toppen: samlet publikum */
+.topp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:32px;align-items:end;padding-bottom:28px;border-bottom:1px solid var(--strek)}
+.helt{font-size:56px;font-weight:600;line-height:1;letter-spacing:-.02em}
+.helt-merke{color:var(--gra);font-size:13px;margin-bottom:10px}
+.endring{font-size:14px;margin-top:10px}
+.opp{color:var(--opp)} .ned{color:var(--ned)} .null{color:var(--gra)}
+.fordeling .bar{display:flex;gap:2px;height:28px;margin:8px 0 10px}
+.fordeling .bar div{border-radius:4px;color:#fff;font-size:12px;font-weight:500;display:flex;align-items:center;padding-left:8px;white-space:nowrap;overflow:visible;min-width:0}
+.fordeling .bar div.lys{color:#0b0b0b}
+.forklaring{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--gra)}
+.forklaring span{display:inline-flex;align-items:center;gap:6px}
+
+/* Flisene */
+.fliser{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:28px}
+.flis{border:1px solid var(--strek);border-radius:10px;padding:14px 16px 12px;cursor:pointer;background:var(--papir);text-align:left;font:inherit;color:inherit;display:block;width:100%}
+.flis:hover{border-color:var(--akse)}
+.flis[aria-pressed=true]{border-color:var(--blekk);box-shadow:0 0 0 1px var(--blekk)}
+.flis .navn{display:flex;align-items:center;gap:8px;font-weight:500}
+.flis .status{margin-left:auto;font-size:11.5px;color:var(--svak);font-weight:400}
+.flis .status.varsel{color:var(--advarsel)}
+.flis .verdi{font-size:30px;font-weight:600;margin-top:8px;line-height:1.1}
+.flis .enhet{color:var(--gra);font-size:12px}
+.flis .delta{font-size:13px;margin-top:4px}
+.flis svg{display:block;margin-top:8px}
+.flis .sekundaer{display:flex;flex-wrap:wrap;gap:2px 14px;color:var(--gra);font-size:12px;margin-top:6px}
+.flis .sekundaer b{color:var(--blekk);font-weight:500}
+.flis.tom .verdi{color:var(--svak);font-size:18px;font-weight:500}
+
+/* Detaljgrafen */
+.detalj{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:28px;align-items:start}
+.graf{position:relative}
+.graf svg{display:block;width:100%;overflow:visible}
+.graf text{font-family:var(--mono);font-size:11px;fill:var(--gra)}
+.tips{position:absolute;pointer-events:none;background:var(--papir);border:1px solid var(--strek);border-radius:6px;padding:6px 9px;font-size:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);white-space:nowrap;display:none;z-index:5;max-width:320px}
+.tips .t{color:var(--gra)}
+.tips .tekst{white-space:normal;max-width:300px;color:var(--gra);margin-top:3px}
+.faner,.filter{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:14px;align-items:center}
+.merknad{color:var(--gra);font-size:12px;margin-top:8px}
+.merknad .strek{display:inline-block;width:18px;border-top:2px dashed var(--gra);vertical-align:middle;margin-right:4px}
+
+/* Tabeller */
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--strek);font-variant-numeric:tabular-nums;vertical-align:top}
+th{font-weight:500;color:var(--gra);font-size:12px;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+td.tekst,th.tekst{text-align:left}
+td.tekst{max-width:420px}
+td.tekst a{color:var(--blekk);text-decoration:none}
+td.tekst a:hover{text-decoration:underline}
+th.sorter{cursor:pointer;user-select:none}
+th.sorter:hover{color:var(--blekk)}
+th[aria-sort]::after{content:" ↓"}
+th[aria-sort=ascending]::after{content:" ↑"}
+.rull{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.plattform{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.liten{font-size:12px;color:var(--gra)}
+.mer{font:inherit;font-size:13px;margin-top:12px;border:1px solid var(--strek);background:var(--papir);padding:6px 12px;border-radius:999px;cursor:pointer}
+label.valg{font-size:12.5px;color:var(--gra);margin-left:8px;display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+
+.to{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.folk ul{list-style:none;padding:0;margin:6px 0 0;font-size:12.5px}
+.folk li{padding:3px 0;border-bottom:1px solid var(--strek);display:flex;justify-content:space-between;gap:10px}
+.tall3{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:12px}
+.tall3 div b{display:block;font-size:24px;font-weight:600}
+.tall3 div span{color:var(--gra);font-size:12px}
+.feil{color:var(--ned)}
+
+@media (max-width:820px){
+  .side{padding:20px 16px 60px}
+  .topp,.detalj,.to{grid-template-columns:minmax(0,1fr)}
+  .helt{font-size:48px}
+  .fliser{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+  .flis{padding:12px}
+  .flis .verdi{font-size:24px}
+  td.tekst{min-width:220px}
+}
+</style>
+</head>
+<body>
+<div class="side">
+  <header>
+    <div>
+      <h1>Mine tall</h1>
+      <div class="under" id="oppdatert">Laster …</div>
+    </div>
+    <div class="perioder" id="perioder" role="group" aria-label="Periode"></div>
+  </header>
+
+  <section class="topp">
+    <div>
+      <div class="helt-merke">Samlet publikum</div>
+      <div class="helt" id="total">–</div>
+      <div class="endring" id="totalEndring"></div>
+      <div class="merknad" id="totalMerknad"></div>
+    </div>
+    <div class="fordeling">
+      <div class="helt-merke">Fordeling på plattformene</div>
+      <div class="bar" id="fordeling" role="img"></div>
+      <div class="forklaring" id="fordelingForklaring"></div>
+    </div>
+  </section>
+
+  <div class="fliser" id="fliser"></div>
+
+  <h2>Utvikling</h2>
+  <p class="h2under" id="detaljUnder">Velg en plattform over eller her.</p>
+  <div class="faner" id="faner" role="group" aria-label="Plattform"></div>
+  <div class="detalj">
+    <div>
+      <div class="graf" id="graf"></div>
+      <div class="merknad" id="grafMerknad"></div>
+    </div>
+    <div class="rull" id="detaljTabell"></div>
+  </div>
+
+  <h2>Vekst</h2>
+  <p class="h2under">Netto endring i hovedtallet for hver plattform. Prosent er vekst siste 30 dager.</p>
+  <div class="rull" id="vekst"></div>
+
+  <h2>Innlegg</h2>
+  <p class="h2under">Alle innlegg, uansett periode. Engasjement er likes, kommentarer, delinger og sitater delt på antall følgere da innlegget ble publisert. Nye følgere er endringen de sju dagene etter.</p>
+  <div class="filter" id="innleggFilter"></div>
+  <div class="rull" id="innlegg"></div>
+
+  <h2>Hvem kom og gikk</h2>
+  <p class="h2under">Bluesky og Mastodon viser hvem som følger. Telles fra første måling.</p>
+  <div class="to folk" id="folk"></div>
+
+  <h2>Google Scholar</h2>
+  <p class="h2under">Siteringer per år, slik Scholar teller dem.</p>
+  <div class="to">
+    <div><div class="tall3" id="scholarTall"></div><div class="graf" id="scholarGraf"></div></div>
+    <div class="rull" id="scholarPub"></div>
+  </div>
+
+  <h2>Om målingene</h2>
+  <p class="h2under">Hvor tallene kommer fra, og når hver plattform sist ble lest.</p>
+  <div class="rull" id="kilder"></div>
+</div>
+
+<div class="tips" id="tips"></div>
+
+<script>
+"use strict";
+// ---------- Oppsett ----------
+const P = {
+  linkedin:  { navn: "LinkedIn",  farge: "#257de0", hoved: "folgere", enhet: "følgere", andre: [["kontakter", "kontakter"]], kilde: "Edge-utvidelsen", lenke: "https://www.linkedin.com/in/orjansamuelsen/" },
+  facebook:  { navn: "Facebook",  farge: "#6a4ce2", hoved: "venner", enhet: "venner", andre: [["folgere", "følgere"]], kilde: "Edge-utvidelsen", lenke: "https://www.facebook.com/" },
+  instagram: { navn: "Instagram", farge: "#ee7fac", hoved: "folgere", enhet: "følgere", andre: [["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Edge-utvidelsen", lenke: "https://www.instagram.com/", lys: true },
+  x:         { navn: "X",         farge: "#f47230", hoved: "folgere", enhet: "følgere", andre: [["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Edge-utvidelsen", lenke: "https://x.com/orjansamuelsen", lys: true },
+  bluesky:   { navn: "Bluesky",   farge: "#00b894", hoved: "folgere_aktive", enhet: "aktive følgere", andre: [["folgere", "i profilen"], ["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Åpent API, hver time", lenke: "https://bsky.app/profile/orjansamuelsen.no", lys: true },
+  mastodon:  { navn: "Mastodon",  farge: "#f2a600", hoved: "folgere", enhet: "følgere", andre: [["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Åpent API, hver time", lenke: "https://mastodon.social/@orjansamuelsen", lys: true },
+  scholar:   { navn: "Scholar",   farge: "#008a17", hoved: "siteringer", enhet: "siteringer", andre: [["h_indeks", "h-indeks"], ["i10_indeks", "i10"], ["publikasjoner", "publikasjoner"]], kilde: "Edge-utvidelsen (Google sperrer skyen)", lenke: "https://scholar.google.com/citations?user=1qEn9ZQAAAAJ", ikkePublikum: true },
+};
+const REKKEFOLGE = ["linkedin", "facebook", "instagram", "x", "bluesky", "mastodon", "scholar"];
+const PERIODER = [["7 d", 7], ["30 d", 30], ["90 d", 90], ["1 år", 365], ["Alt", null]];
+const DAG = 864e5;
+const NAA = Date.now();
+const nf = new Intl.NumberFormat("nb-NO");
+const pf = new Intl.NumberFormat("nb-NO", { maximumFractionDigits: 1, minimumFractionDigits: 1 });
+const datoKort = new Intl.DateTimeFormat("nb-NO", { day: "numeric", month: "short" });
+const datoAar = new Intl.DateTimeFormat("nb-NO", { day: "numeric", month: "short", year: "numeric" });
+const maaned = new Intl.DateTimeFormat("nb-NO", { month: "short", year: "2-digit" });
+const tidF = new Intl.DateTimeFormat("nb-NO", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+
+const S = { periode: 30, valgt: "linkedin", innleggFilter: "alle", visSvar: false, sorter: ["tid", -1], visAntall: 25 };
+try { Object.assign(S, JSON.parse(localStorage.getItem("tall-valg") || "{}")); } catch (e) {}
+function husk() { try { localStorage.setItem("tall-valg", JSON.stringify({ periode: S.periode, valgt: S.valgt })); } catch (e) {} }
+
+// ---------- Data ----------
+const D = { serier: {}, innlegg: [], status: {}, scholar: null, folgere: {} };
+
+async function hentTekst(fil) {
+  try { const r = await fetch("data/" + fil, { cache: "no-cache" }); return r.ok ? await r.text() : null; } catch (e) { return null; }
+}
+async function hentJson(fil) { const t = await hentTekst(fil); try { return t ? JSON.parse(t) : null; } catch (e) { return null; } }
+
+function lesCsv(t) {
+  if (!t) return [];
+  const [hode, ...linjer] = t.trim().split(/\r?\n/);
+  const k = hode.split(",");
+  return linjer.filter(Boolean).map((l) => { const v = l.split(","); const o = {}; k.forEach((n, i) => (o[n] = v[i])); return o; });
+}
+
+// En enkeltmåling som skiller seg kraftig fra begge naboene, mens naboene er enige, er en lesefeil og tas ut.
+function rens(punkter) {
+  return punkter.filter((p, i) => {
+    if (i === 0 || i === punkter.length - 1 || p.kilde === "rekonstruert") return true;
+    const a = punkter[i - 1].v, b = punkter[i + 1].v, v = p.v;
+    const avvik = (x) => Math.abs(v - x) > Math.max(3, 0.25 * Math.max(x, 1));
+    const enige = Math.abs(a - b) <= Math.max(2, 0.1 * Math.max(a, 1));
+    return !(avvik(a) && avvik(b) && enige);
+  });
+}
+
+function serie(pl, maal) { return (D.serier[pl] && D.serier[pl][maal]) || []; }
+// Verdien på et tidspunkt: siste måling før eller lik tidspunktet
+function verdiVed(s, t) {
+  let v; for (const p of s) { if (p.t <= t) v = p; else break; } return v;
+}
+function siste(s) { return s[s.length - 1]; }
+
+function endring(s, dager) {
+  const n = siste(s); if (!n) return null;
+  if (dager == null) return { d: n.v - s[0].v, fra: s[0], delvis: false };
+  const start = NAA - dager * DAG;
+  let f = verdiVed(s, start), delvis = false;
+  if (!f) { f = s[0]; delvis = true; }
+  if (f === n) return { d: 0, fra: f, delvis, ingen: true };
+  const forrigeStart = verdiVed(s, start - dager * DAG);
+  const forrige = (!delvis && forrigeStart) ? f.v - forrigeStart.v : null;
+  return { d: n.v - f.v, fra: f, delvis, forrige, pst: f.v > 0 ? (n.v - f.v) / f.v * 100 : null };
+}
+
+// ---------- Format ----------
+function tegn(d) { return d > 0 ? "+" + nf.format(d) : d < 0 ? "−" + nf.format(-d) : "±0"; }
+function klasse(d) { return d > 0 ? "opp" : d < 0 ? "ned" : "null"; }
+function siden(t) {
+  const m = (NAA - t) / 6e4;
+  if (m < 60) return "for " + Math.max(1, Math.round(m)) + " min siden";
+  if (m < 48 * 60) return "for " + Math.round(m / 60) + " t siden";
+  return "for " + Math.round(m / 1440) + " d siden";
+}
+function periodeNavn() { const p = PERIODER.find((x) => x[1] === S.periode); return p ? (p[1] ? "siste " + p[0].replace(" d", " dager").replace("1 år", "året") : "hele perioden") : ""; }
+function esc(s) { return String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+// ---------- Tips ----------
+const tips = document.getElementById("tips");
+function visTips(html, x, y) {
+  tips.innerHTML = html; tips.style.display = "block";
+  const b = tips.offsetWidth, h = tips.offsetHeight;
+  let l = x + 14, t = y - h - 10;
+  if (l + b > window.innerWidth - 8) l = x - b - 14;
+  if (t < 8) t = y + 16;
+  tips.style.left = (l + window.scrollX) + "px"; tips.style.top = (t + window.scrollY) + "px";
+}
+function skjulTips() { tips.style.display = "none"; }
+
+// ---------- Akser ----------
+function pene(min, maks, n = 4) {
+  if (min === maks) { min = Math.max(0, min - 1); maks = maks + 1; }
+  const steg0 = (maks - min) / n, mag = Math.pow(10, Math.floor(Math.log10(steg0)));
+  const steg = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((s) => s >= steg0) || 10 * mag;
+  const a = Math.floor(min / steg) * steg, b = Math.ceil(maks / steg) * steg;
+  const ut = []; for (let v = a; v <= b + steg / 2; v += steg) ut.push(Math.round(v * 100) / 100);
+  return ut;
+}
+function tidsmerker(fra, til, bredde) {
+  const span = til - fra, maks = Math.max(2, Math.floor(bredde / 80));
+  const kand = [1, 2, 7, 14, 30.44, 61, 91.3, 182.6, 365.25].map((d) => d * DAG);
+  const steg = kand.find((k) => span / k <= maks) || kand[kand.length - 1];
+  const ut = [];
+  if (steg >= 30 * DAG) {
+    const d = new Date(fra); d.setDate(1); d.setHours(0, 0, 0, 0);
+    const m = Math.round(steg / (30.44 * DAG));
+    while (d.getTime() <= til) { if (d.getTime() >= fra) ut.push({ t: d.getTime(), tekst: maaned.format(d) }); d.setMonth(d.getMonth() + m); }
+  } else {
+    const d = new Date(fra); d.setHours(0, 0, 0, 0);
+    while (d.getTime() <= til) { if (d.getTime() >= fra) ut.push({ t: d.getTime(), tekst: datoKort.format(d) }); d.setTime(d.getTime() + steg); d.setHours(0, 0, 0, 0); }
+  }
+  return ut;
+}
+
+// ---------- Linjegraf ----------
+function linjegraf(el, s, o) {
+  el.innerHTML = "";
+  const B = el.clientWidth || 600, H = o.hoyde || 280, ml = 48, mr = 14, mt = 12, mb = 28;
+  if (!s.length) { el.innerHTML = `<div class="merknad" style="height:${H}px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--strek);border-radius:8px">Ingen målinger ennå</div>`; return; }
+  const fra = o.fra ?? s[0].t, til = NAA;
+  const synlige = s.filter((p) => p.t >= fra);
+  const start = verdiVed(s, fra);
+  const pkt = (start && start.t < fra ? [{ ...start, t: fra }] : []).concat(synlige);
+  if (!pkt.length) pkt.push({ ...siste(s), t: fra });
+  pkt.push({ ...siste(pkt), t: til, kunt: true });
+  const vs = pkt.map((p) => p.v), lo = Math.min(...vs), hi = Math.max(...vs);
+  const yt = pene(lo, hi);
+  const y0 = yt[0], y1 = yt[yt.length - 1];
+  const X = (t) => ml + (t - fra) / Math.max(1, til - fra) * (B - ml - mr);
+  const Y = (v) => mt + (1 - (v - y0) / Math.max(1e-9, y1 - y0)) * (H - mt - mb);
+  let svg = `<svg width="${B}" height="${H}" role="img" aria-label="${esc(o.navn)}">`;
+  for (const v of yt) svg += `<line x1="${ml}" x2="${B - mr}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--strek)"/><text x="${ml - 8}" y="${Y(v) + 4}" text-anchor="end">${nf.format(v)}</text>`;
+  for (const m of tidsmerker(fra, til, B - ml - mr)) svg += `<text x="${X(m.t)}" y="${H - 8}" text-anchor="middle">${m.tekst}</text>`;
+  svg += `<line x1="${ml}" x2="${B - mr}" y1="${H - mb}" y2="${H - mb}" stroke="var(--akse)"/>`;
+  // Trappelinje: verdien står til neste måling. Rekonstruert del stiplet.
+  const segs = []; let cur = null;
+  for (let i = 0; i < pkt.length; i++) {
+    const p = pkt[i], r = p.kilde === "rekonstruert";
+    if (!cur || cur.r !== r) { if (cur) cur.d += ` L${X(p.t)},${Y(cur.sistV)}`; cur = { r, d: `M${X(p.t)},${Y(p.v)}`, sistV: p.v }; segs.push(cur); }
+    else cur.d += ` L${X(p.t)},${Y(cur.sistV)} L${X(p.t)},${Y(p.v)}`;
+    cur.sistV = p.v;
+  }
+  const flate = `M${X(pkt[0].t)},${Y(y0)} ` + pkt.map((p, i) => (i ? `L${X(p.t)},${Y(pkt[i - 1].v)} ` : "") + `L${X(p.t)},${Y(p.v)}`).join(" ") + ` L${X(til)},${Y(y0)} Z`;
+  svg += `<path d="${flate}" fill="${o.farge}" fill-opacity="0.08"/>`;
+  for (const g of segs) svg += `<path d="${g.d}" fill="none" stroke="${o.farge}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" ${g.r ? 'stroke-dasharray="5 4"' : ""}/>`;
+  // Innlegg som små streker langs bunnen
+  const innl = (o.innlegg || []).filter((x) => x.t >= fra);
+  for (const x of innl) svg += `<line x1="${X(x.t)}" x2="${X(x.t)}" y1="${H - mb - 7}" y2="${H - mb}" stroke="var(--gra)" stroke-width="1.5"/>`;
+  const sl = siste(s);
+  svg += `<circle cx="${X(til)}" cy="${Y(sl.v)}" r="4.5" fill="${o.farge}" stroke="var(--papir)" stroke-width="2"/>`;
+  svg += `<text x="${X(til) - 8}" y="${Y(sl.v) - 10}" text-anchor="end" style="fill:var(--blekk);font-weight:500">${nf.format(sl.v)}</text>`;
+  svg += `<line id="kryss" x1="0" x2="0" y1="${mt}" y2="${H - mb}" stroke="var(--akse)" visibility="hidden"/><circle id="kryssP" r="4.5" fill="${o.farge}" stroke="var(--papir)" stroke-width="2" visibility="hidden"/>`;
+  svg += `<rect x="${ml}" y="0" width="${B - ml - mr}" height="${H}" fill="transparent" id="flate"/></svg>`;
+  el.innerHTML = svg;
+  const flateEl = el.querySelector("#flate"), kryss = el.querySelector("#kryss"), kp = el.querySelector("#kryssP");
+  const ekte = s;
+  flateEl.addEventListener("mousemove", (e) => {
+    const r = el.getBoundingClientRect(), mx = e.clientX - r.left;
+    const t = fra + (mx - ml) / (B - ml - mr) * (til - fra);
+    const nær = innl.find((x) => Math.abs(X(x.t) - mx) < 4 && e.clientY - r.top > H - mb - 16);
+    const p = verdiVed(ekte, t) || ekte[0];
+    kryss.setAttribute("x1", mx); kryss.setAttribute("x2", mx); kryss.setAttribute("visibility", "visible");
+    kp.setAttribute("cx", mx); kp.setAttribute("cy", Y(p.v)); kp.setAttribute("visibility", "visible");
+    let h = `<div class="t">${tidF.format(new Date(t))}</div><b>${nf.format(p.v)}</b> ${esc(o.enhet)}${p.kilde === "rekonstruert" ? ' <span class="t">(rekonstruert)</span>' : ""}`;
+    if (nær) h += `<div class="tekst">Innlegg: ${esc(nær.tekst.slice(0, 120))}</div>`;
+    visTips(h, e.clientX, e.clientY);
+  });
+  flateEl.addEventListener("mouseleave", () => { kryss.setAttribute("visibility", "hidden"); kp.setAttribute("visibility", "hidden"); skjulTips(); });
+}
+
+function minigraf(s, farge, fra) {
+  const B = 220, H = 36;
+  const pkt = s.filter((p) => p.t >= fra); const st = verdiVed(s, fra);
+  if (st && st.t < fra) pkt.unshift({ ...st, t: fra });
+  if (!pkt.length) return "";
+  pkt.push({ ...siste(pkt), t: NAA });
+  const vs = pkt.map((p) => p.v), lo = Math.min(...vs), hi = Math.max(...vs);
+  const t0 = pkt[0].t;
+  const X = (t) => 2 + (t - t0) / Math.max(1, NAA - t0) * (B - 8);
+  const Y = (v) => hi === lo ? H / 2 : 3 + (1 - (v - lo) / (hi - lo)) * (H - 6);
+  let d = `M${X(pkt[0].t)},${Y(pkt[0].v)}`;
+  for (let i = 1; i < pkt.length; i++) d += ` L${X(pkt[i].t)},${Y(pkt[i - 1].v)} L${X(pkt[i].t)},${Y(pkt[i].v)}`;
+  const sl = pkt[pkt.length - 1];
+  return `<svg width="100%" height="${H}" viewBox="0 0 ${B} ${H}" preserveAspectRatio="none" aria-hidden="true"><path d="${d}" fill="none" stroke="${farge}" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>`;
+}
+
+// ---------- Visning ----------
+function fraTid() { return S.periode == null ? -Infinity : NAA - S.periode * DAG; }
+
+function statusFor(pl) {
+  const s = serie(pl, P[pl].hoved), st = D.status[pl] || {};
+  const sistT = Math.max(s.length ? siste(s).t : 0, st.sist_ok ? Date.parse(st.sist_ok) : 0);
+  if (!sistT) return { tekst: st.melding ? "feil: " + st.melding : "ikke målt ennå", varsel: true, sistT };
+  const gammel = NAA - sistT > 2 * DAG;
+  if (st.ok === false && st.melding) return { tekst: "▲ " + st.melding, varsel: true, sistT };
+  return { tekst: (gammel ? "▲ " : "") + "målt " + siden(sistT), varsel: gammel, sistT };
+}
+
+function visPerioder() {
+  const el = document.getElementById("perioder");
+  el.innerHTML = PERIODER.map(([n, d]) => `<button aria-pressed="${S.periode === d}" data-d="${d}">${n}</button>`).join("");
+  el.onclick = (e) => { const b = e.target.closest("button"); if (!b) return; S.periode = b.dataset.d === "null" ? null : +b.dataset.d; husk(); alt(); };
+}
+
+function visTopp() {
+  const fra = fraTid();
+  let sum = 0, d = 0, maalt = 0, deler = [], sammenlign = 0, forrige = 0, harForrige = true;
+  for (const pl of REKKEFOLGE) {
+    if (P[pl].ikkePublikum) continue;
+    const s = serie(pl, P[pl].hoved); if (!s.length) continue;
+    maalt++; sum += siste(s).v; deler.push([pl, siste(s).v]);
+    const e = endring(s, S.periode);
+    if (e && !e.ingen) { d += e.d; if (e.forrige == null) harForrige = false; else forrige += e.forrige; }
+    else if (e && e.ingen) { if (e.forrige == null) harForrige = false; }
+  }
+  const antall = REKKEFOLGE.filter((p) => !P[p].ikkePublikum).length;
+  document.getElementById("total").textContent = maalt ? nf.format(sum) : "–";
+  document.getElementById("totalEndring").innerHTML = maalt
+    ? `<span class="${klasse(d)}">${tegn(d)}</span> ${periodeNavn()}` + (harForrige && S.periode ? ` <span class="liten">· forrige periode ${tegn(forrige)}</span>` : "")
+    : "";
+  document.getElementById("totalMerknad").textContent = (maalt < antall ? `${maalt} av ${antall} plattformer målt. ` : "") + "Samme person teller én gang per plattform."
+  const fe = document.getElementById("fordeling");
+  fe.innerHTML = deler.map(([pl, v]) => {
+    const andel = v / sum * 100;
+    return `<div class="${P[pl].lys ? "lys" : ""}" style="flex:${v} 1 0;background:${P[pl].farge}" title="${P[pl].navn}: ${nf.format(v)} (${Math.round(andel)} %)">${andel >= 9 ? Math.round(andel) + " %" : ""}</div>`;
+  }).join("");
+  fe.setAttribute("aria-label", deler.map(([pl, v]) => `${P[pl].navn} ${v}`).join(", "));
+  document.getElementById("fordelingForklaring").innerHTML = deler.map(([pl, v]) => `<span><i class="prikk" style="background:${P[pl].farge}"></i>${P[pl].navn} ${nf.format(v)}</span>`).join("");
+}
+
+function visFliser() {
+  const fra = fraTid();
+  const el = document.getElementById("fliser");
+  el.innerHTML = REKKEFOLGE.map((pl) => {
+    const c = P[pl], s = serie(pl, c.hoved), st = statusFor(pl);
+    if (!s.length) return `<button class="flis tom" data-p="${pl}" aria-pressed="${S.valgt === pl}"><div class="navn"><i class="prikk" style="background:${c.farge}"></i>${c.navn}</div><div class="verdi">venter på første måling</div><div class="sekundaer">${c.andre.map(([m, n]) => { const x = siste(serie(pl, m)); return x ? `<span><b>${nf.format(x.v)}</b> ${n}</span>` : ""; }).join("")}</div><div class="sekundaer">${esc(st.tekst)}</div></button>`;
+    const e = endring(s, S.periode);
+    let delta = "";
+    if (e && !e.ingen) delta = `<span class="${klasse(e.d)}">${tegn(e.d)}</span>` + (e.pst != null ? ` <span class="liten">(${e.pst >= 0 ? "+" : "−"}${pf.format(Math.abs(e.pst))} %)</span>` : "") + (e.delvis ? ` <span class="liten">siden ${datoKort.format(new Date(e.fra.t))}</span>` : "");
+    else delta = `<span class="null">±0</span> <span class="liten">${e && e.delvis ? "bare én måling" : ""}</span>`;
+    const sek = c.andre.map(([m, n]) => { const x = siste(serie(pl, m)); return x ? `<span><b>${nf.format(x.v)}</b> ${n}</span>` : ""; }).join("");
+    return `<button class="flis" data-p="${pl}" aria-pressed="${S.valgt === pl}">
+      <div class="navn"><i class="prikk" style="background:${c.farge}"></i>${c.navn}<span class="status ${st.varsel ? "varsel" : ""}">${esc(st.tekst)}</span></div>
+      <div class="verdi">${nf.format(siste(s).v)}</div><div class="enhet">${c.enhet}</div>
+      <div class="delta">${delta}</div>
+      ${minigraf(s, c.farge, Math.max(fra, s[0].t))}
+      <div class="sekundaer">${sek}</div></button>`;
+  }).join("");
+  el.onclick = (e) => { const b = e.target.closest(".flis"); if (!b) return; S.valgt = b.dataset.p; husk(); visFliser(); visDetalj(); document.getElementById("faner").scrollIntoView({ behavior: "smooth", block: "start" }); };
+}
+
+function visDetalj() {
+  const pl = S.valgt, c = P[pl];
+  const f = document.getElementById("faner");
+  f.innerHTML = REKKEFOLGE.map((p) => `<button aria-pressed="${p === pl}" data-p="${p}"><i class="prikk" style="background:${P[p].farge};margin-right:6px"></i>${P[p].navn}</button>`).join("");
+  f.onclick = (e) => { const b = e.target.closest("button"); if (!b) return; S.valgt = b.dataset.p; husk(); visFliser(); visDetalj(); };
+  const s = serie(pl, c.hoved);
+  const innl = D.innlegg.filter((x) => x.plattform === pl && !x.svar).map((x) => ({ t: Date.parse(x.tid), tekst: x.tekst || "" }));
+  document.getElementById("detaljUnder").textContent = `${c.navn}: ${c.enhet}, ${periodeNavn()}.`;
+  linjegraf(document.getElementById("graf"), s, { farge: c.farge, fra: S.periode == null ? undefined : fraTid(), navn: c.navn, enhet: c.enhet, innlegg: innl });
+  const rek = s.some((p) => p.kilde === "rekonstruert");
+  document.getElementById("grafMerknad").innerHTML =
+    (rek ? `<span class="strek"></span>Rekonstruert fra når dagens følgere begynte å følge. Det er et minimum, for de som har sluttet å følge er ikke med. ` : "") +
+    (innl.length ? "Strekene langs bunnen er innlegg. " : "") +
+    (s.length ? `Første måling ${datoAar.format(new Date(s[0].t))}.` : "");
+  // Tabell med alle mål
+  const maal = [[c.hoved, c.enhet], ...c.andre];
+  const kol = [["7 d", 7], ["30 d", 30], ["90 d", 90], ["1 år", 365]];
+  let h = `<table><thead><tr><th>Mål</th><th>Nå</th>${kol.map((k) => `<th>${k[0]}</th>`).join("")}</tr></thead><tbody>`;
+  for (const [m, n] of maal) {
+    const ss = serie(pl, m); if (!ss.length) continue;
+    h += `<tr><td>${n}</td><td>${nf.format(siste(ss).v)}</td>` + kol.map(([, d]) => { const e = endring(ss, d); return e && !e.ingen && !e.delvis ? `<td class="${klasse(e.d)}">${tegn(e.d)}</td>` : e && e.delvis && !e.ingen ? `<td class="liten" title="siden ${datoKort.format(new Date(e.fra.t))}">${tegn(e.d)}*</td>` : `<td class="null">–</td>`; }).join("") + "</tr>";
+  }
+  h += `</tbody></table><div class="merknad">* Målt kortere enn perioden; endring siden første måling.</div>`;
+  document.getElementById("detaljTabell").innerHTML = h;
+}
+
+function visVekst() {
+  const kol = [["7 d", 7], ["30 d", 30], ["90 d", 90], ["1 år", 365], ["Alt", null]];
+  let h = `<table><thead><tr><th>Plattform</th><th>Nå</th>${kol.map((k) => `<th>${k[0]}</th>`).join("")}<th>Vekst 30 d</th></tr></thead><tbody>`;
+  for (const pl of REKKEFOLGE) {
+    const c = P[pl], s = serie(pl, c.hoved);
+    h += `<tr><td><span class="plattform"><i class="prikk" style="background:${c.farge}"></i>${c.navn}</span> <span class="liten">${c.enhet}</span></td>`;
+    if (!s.length) { h += `<td class="null">–</td>` + kol.map(() => `<td class="null">–</td>`).join("") + `<td class="null">–</td></tr>`; continue; }
+    h += `<td>${nf.format(siste(s).v)}</td>`;
+    for (const [, d] of kol) { const e = endring(s, d); h += e && !e.ingen ? `<td class="${klasse(e.d)}">${tegn(e.d)}${e.delvis ? "*" : ""}</td>` : `<td class="null">–</td>`; }
+    const e = endring(s, 30);
+    h += e && !e.ingen && e.pst != null ? `<td class="${klasse(e.d)}">${e.pst >= 0 ? "+" : "−"}${pf.format(Math.abs(e.pst))} %${e.delvis ? "*" : ""}</td>` : `<td class="null">–</td>`;
+    h += "</tr>";
+  }
+  document.getElementById("vekst").innerHTML = h + `</tbody></table><div class="merknad">* Plattformen er målt kortere enn perioden; tallet er endringen siden første måling.</div>`;
+}
+
+function beregnInnlegg() {
+  for (const x of D.innlegg) {
+    const t = Date.parse(x.tid), s = serie(x.plattform, P[x.plattform].hoved);
+    const f = verdiVed(s, t);
+    const sum = (x.likes || 0) + (x.kommentarer || 0) + (x.delinger || 0) + (x.sitater || 0);
+    x.t = t; x.samlet = sum;
+    x.eng = f && f.v > 0 ? sum / f.v * 100 : null;
+    const etter = t + 7 * DAG <= NAA ? verdiVed(s, t + 7 * DAG) : null;
+    x.nye = f && etter && etter !== f ? etter.v - f.v : (f && etter ? 0 : null);
+  }
+}
+
+function visInnlegg() {
+  const finnes = REKKEFOLGE.filter((p) => D.innlegg.some((x) => x.plattform === p));
+  const fl = document.getElementById("innleggFilter");
+  fl.innerHTML = [["alle", "Alle"], ...finnes.map((p) => [p, P[p].navn])].map(([k, n]) => `<button aria-pressed="${S.innleggFilter === k}" data-k="${k}">${n}</button>`).join("")
+    + `<label class="valg"><input type="checkbox" id="visSvar" ${S.visSvar ? "checked" : ""}> vis svar</label>`;
+  fl.onclick = (e) => { const b = e.target.closest("button"); if (!b) return; S.innleggFilter = b.dataset.k; S.visAntall = 25; visInnlegg(); };
+  fl.querySelector("#visSvar").onchange = (e) => { S.visSvar = e.target.checked; visInnlegg(); };
+  const fra = fraTid();
+  let r = D.innlegg.filter((x) => (S.innleggFilter === "alle" || x.plattform === S.innleggFilter) && (S.visSvar || !x.svar));
+  const [k, ret] = S.sorter;
+  r.sort((a, b) => ((a[k] ?? -Infinity) > (b[k] ?? -Infinity) ? 1 : (a[k] ?? -Infinity) < (b[k] ?? -Infinity) ? -1 : 0) * ret);
+  const kol = [["tid", "Dato", ""], ["plattform", "Plattform", "tekst"], ["tekst", "Innlegg", "tekst"], ["likes", "Likes", ""], ["kommentarer", "Komm.", ""], ["delinger", "Delinger", ""], ["visninger", "Visninger", ""], ["eng", "Engasjement", ""], ["nye", "Nye følgere 7 d", ""]];
+  const tall = (v) => v == null ? `<span class="null">–</span>` : nf.format(v);
+  let h = `<table><thead><tr>${kol.map(([n, t, c]) => `<th class="sorter ${c}" data-k="${n}" ${k === n ? `aria-sort="${ret > 0 ? "ascending" : "descending"}"` : ""}>${t}</th>`).join("")}</tr></thead><tbody>`;
+  for (const x of r.slice(0, S.visAntall)) {
+    h += `<tr><td style="white-space:nowrap">${datoAar.format(new Date(x.t))}</td><td class="tekst"><span class="plattform"><i class="prikk" style="background:${P[x.plattform].farge}"></i>${P[x.plattform].navn}</span></td>
+      <td class="tekst"><a href="${esc(x.url)}" target="_blank" rel="noopener">${esc((x.tekst || "(uten tekst)").slice(0, 140))}</a></td>
+      <td>${tall(x.likes)}</td><td>${tall(x.kommentarer)}</td><td>${tall(x.delinger)}</td><td>${tall(x.visninger)}</td>
+      <td>${x.eng == null ? '<span class="null">–</span>' : pf.format(x.eng) + " %"}</td>
+      <td class="${x.nye == null ? "null" : klasse(x.nye)}">${x.nye == null ? "–" : tegn(x.nye)}</td></tr>`;
+  }
+  if (!r.length) h += `<tr><td colspan="9" class="tekst liten">Ingen innlegg ennå.</td></tr>`;
+  h += `</tbody></table>`;
+  if (r.length > S.visAntall) h += `<button class="mer" id="mer">Vis ${Math.min(25, r.length - S.visAntall)} til (${r.length} i alt)</button>`;
+  const el = document.getElementById("innlegg");
+  el.innerHTML = h;
+  el.querySelectorAll("th.sorter").forEach((th) => th.onclick = () => { const n = th.dataset.k; S.sorter = [n, S.sorter[0] === n ? -S.sorter[1] : -1]; visInnlegg(); });
+  const m = el.querySelector("#mer"); if (m) m.onclick = () => { S.visAntall += 25; visInnlegg(); };
+}
+
+function visFolk() {
+  const el = document.getElementById("folk");
+  let h = "";
+  for (const pl of ["bluesky", "mastodon"]) {
+    const reg = (D.folgere || {})[pl]; if (!reg) continue;
+    const forste = Math.min(...Object.values(reg).map((r) => Date.parse(r.forst)));
+    const fra = Math.max(fraTid(), forste + 1);
+    const nye = Object.values(reg).filter((r) => Date.parse(r.forst) > forste && Date.parse(r.forst) >= fra).sort((a, b) => b.forst.localeCompare(a.forst));
+    const borte = Object.values(reg).filter((r) => r.borte && Date.parse(r.borte) >= fra).sort((a, b) => b.borte.localeCompare(a.borte));
+    const lenke = (r) => pl === "bluesky" ? `https://bsky.app/profile/${r.navn}` : `https://mastodon.social/@${r.navn}`;
+    const li = (r, t) => `<li><a href="${esc(lenke(r))}" target="_blank" rel="noopener">${esc(r.navn)}</a><span class="liten">${datoKort.format(new Date(t))}</span></li>`;
+    h += `<div><b><span class="plattform"><i class="prikk" style="background:${P[pl].farge}"></i>${P[pl].navn}</span></b>
+      <div class="liten">Fulgt siden ${datoAar.format(new Date(forste))}: ${nye.length} nye, ${borte.length} sluttet ${periodeNavn()}</div>
+      <ul>${nye.slice(0, 12).map((r) => li(r, Date.parse(r.forst))).join("")}${borte.slice(0, 12).map((r) => li(r, Date.parse(r.borte)).replace("<li>", '<li class="ned"><span>sluttet:</span> ')).join("")}</ul></div>`;
+  }
+  el.innerHTML = h || `<div class="liten">Ingen data ennå.</div>`;
+}
+
+function visScholar() {
+  const s = D.scholar;
+  if (!s) { document.getElementById("scholarTall").innerHTML = `<div class="liten">Ingen data ennå.</div>`; return; }
+  document.getElementById("scholarTall").innerHTML = [["siteringer", "siteringer"], ["h_indeks", "h-indeks"], ["i10_indeks", "i10-indeks"]].map(([k, n]) => `<div><b>${nf.format(s[k])}</b><span>${n}</span></div>`).join("") + `<div><b>${nf.format(s.publikasjoner.length)}</b><span>publikasjoner</span></div>`;
+  // Søyler per år
+  const el = document.getElementById("scholarGraf");
+  const aar = Object.keys(s.per_aar).sort(), v = aar.map((a) => s.per_aar[a]);
+  const B = el.clientWidth || 500, H = 220, ml = 36, mr = 8, mt = 18, mb = 26;
+  const yt = pene(0, Math.max(...v, 1)), y1 = yt[yt.length - 1];
+  const band = (B - ml - mr) / aar.length, bw = Math.min(24, band * 0.6);
+  const Y = (x) => mt + (1 - x / y1) * (H - mt - mb);
+  let g = `<svg width="${B}" height="${H}" role="img" aria-label="Siteringer per år">`;
+  for (const t of yt) g += `<line x1="${ml}" x2="${B - mr}" y1="${Y(t)}" y2="${Y(t)}" stroke="var(--strek)"/><text x="${ml - 8}" y="${Y(t) + 4}" text-anchor="end">${t}</text>`;
+  aar.forEach((a, i) => {
+    const x = ml + band * i + (band - bw) / 2, y = Y(v[i]), h = H - mb - y, r = Math.min(4, h);
+    if (h > 0) g += `<path d="M${x},${H - mb} V${y + r} Q${x},${y} ${x + r},${y} H${x + bw - r} Q${x + bw},${y} ${x + bw},${y + r} V${H - mb} Z" fill="${P.scholar.farge}"><title>${a}: ${v[i]} siteringer</title></path>`;
+    g += `<text x="${x + bw / 2}" y="${y - 5}" text-anchor="middle" style="fill:var(--blekk)">${v[i]}</text><text x="${x + bw / 2}" y="${H - 8}" text-anchor="middle">${a}</text>`;
+  });
+  g += `<line x1="${ml}" x2="${B - mr}" y1="${H - mb}" y2="${H - mb}" stroke="var(--akse)"/></svg>`;
+  el.innerHTML = g;
+  const pub = [...s.publikasjoner].sort((a, b) => b.siteringer - a.siteringer).slice(0, 12);
+  document.getElementById("scholarPub").innerHTML = `<table><thead><tr><th class="tekst">Mest siterte</th><th>År</th><th>Siteringer</th></tr></thead><tbody>${pub.map((p) => `<tr><td class="tekst">${esc(p.tittel)}</td><td>${p.aar ?? ""}</td><td>${p.siteringer}</td></tr>`).join("")}</tbody></table><div class="merknad">Sist lest ${tidF.format(new Date(s.tid))}.</div>`;
+}
+
+function visKilder() {
+  let h = `<table><thead><tr><th>Plattform</th><th class="tekst">Kilde</th><th class="tekst">Status</th><th>Målinger</th><th>Første</th></tr></thead><tbody>`;
+  for (const pl of REKKEFOLGE) {
+    const c = P[pl], s = serie(pl, c.hoved), st = statusFor(pl);
+    const rek = s.filter((p) => p.kilde === "rekonstruert").length;
+    h += `<tr><td><a class="plattform" href="${c.lenke}" target="_blank" rel="noopener" style="color:inherit"><i class="prikk" style="background:${c.farge}"></i>${c.navn}</a></td>
+      <td class="tekst">${c.kilde}${rek ? " + rekonstruert historikk" : ""}</td><td class="tekst ${st.varsel ? "feil" : ""}">${esc(st.tekst)}</td>
+      <td>${nf.format(s.length - rek)}${rek ? ` <span class="liten">+ ${rek}</span>` : ""}</td><td>${s.length ? datoAar.format(new Date(s[0].t)) : "–"}</td></tr>`;
+  }
+  h += `</tbody></table><div class="merknad">LinkedIn, Facebook, Instagram og X leses av en utvidelse i Edge på PC-en, med innloggingen som allerede er der, hver tredje time så lenge PC-en er på. De åpne plattformene leses i skyen hver time. Et tall lagres når det har endret seg, ellers hver sjette time. En enkeltmåling som avviker kraftig fra begge naboene, tas ut som lesefeil.</div>`;
+  document.getElementById("kilder").innerHTML = h;
+}
+
+function alt() {
+  visPerioder(); visTopp(); visFliser(); visDetalj(); visVekst(); visInnlegg(); visFolk(); visScholar(); visKilder();
+}
+
+async function start() {
+  const [sky, edge, hist, isky, iedge, sch, sche, ssky, sedge, folg] = await Promise.all([
+    hentTekst("sky.csv"), hentTekst("edge.csv"), hentTekst("historikk.csv"),
+    hentJson("innlegg_sky.json"), hentJson("innlegg_edge.json"), hentJson("scholar_sky.json"), hentJson("scholar_edge.json"),
+    hentJson("status_sky.json"), hentJson("status_edge.json"), hentJson("folgere_sky.json"),
+  ]);
+  const rader = [...lesCsv(hist), ...lesCsv(sky), ...lesCsv(edge)];
+  for (const r of rader) {
+    const v = Number(r.verdi), t = Date.parse(r.tid);
+    if (!P[r.plattform] || !Number.isFinite(v) || !Number.isFinite(t)) continue;
+    ((D.serier[r.plattform] ||= {})[r.maal] ||= []).push({ t, v, kilde: r.kilde });
+  }
+  for (const pl in D.serier) for (const m in D.serier[pl]) {
+    const s = D.serier[pl][m].sort((a, b) => a.t - b.t);
+    // Rekonstruert historikk gjelder bare før første faktiske måling
+    const forsteEkte = s.find((p) => p.kilde !== "rekonstruert");
+    D.serier[pl][m] = rens(forsteEkte ? s.filter((p) => p.kilde !== "rekonstruert" || p.t < forsteEkte.t) : s);
+  }
+  for (const kilde of [isky, iedge]) for (const [pl, liste] of Object.entries(kilde || {})) if (P[pl]) for (const x of liste) D.innlegg.push({ ...x, plattform: pl });
+  D.scholar = [sch, sche].filter(Boolean).sort((a, b) => (b.tid || "").localeCompare(a.tid || ""))[0] || null;
+  D.folgere = folg || {};
+  for (const [pl, st] of Object.entries(sedge || {})) D.status[pl] = st;
+  if (ssky && ssky.feil) for (const f of ssky.feil) { const pl = f.split(":")[0]; if (pl !== "scholar") D.status[pl] = { ok: false, melding: f.slice(pl.length + 1).trim() }; }
+  beregnInnlegg();
+  const alleT = Object.values(D.serier).flatMap((o) => Object.values(o).flatMap((s) => s.filter((p) => p.kilde !== "rekonstruert").map((p) => p.t)));
+  document.getElementById("oppdatert").textContent = alleT.length ? "Siste måling " + tidF.format(new Date(Math.max(...alleT))) : "Ingen målinger ennå";
+  if (!P[S.valgt]) S.valgt = "linkedin";
+  if (!PERIODER.some((p) => p[1] === S.periode)) S.periode = 30;
+  alt();
+  let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { visDetalj(); visScholar(); }, 150); });
+}
+start();
+</script>
+</body>
+</html>
