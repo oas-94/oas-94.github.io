@@ -2,31 +2,36 @@
  "bluesky": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T11:42:46Z"
+  "sist_ok": "2026-11-27T11:58:13Z"
  },
  "facebook": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T11:42:46Z"
+  "sist_ok": "2026-11-27T11:58:13Z"
  },
  "instagram": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T11:42:46Z"
+  "sist_ok": "2026-11-27T11:58:13Z"
  },
  "linkedin": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T11:42:46Z"
+  "sist_ok": "2026-11-27T11:58:13Z"
  },
  "mastodon": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T11:42:46Z"
+  "sist_ok": "2026-11-27T11:58:13Z"
  },
  "scholar": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T11:42:46Z"
+  "sist_ok": "2026-11-27T11:58:13Z"
+ },
+ "x": {
+  "melding": "",
+  "ok": true,
+  "sist_ok": "2026-11-27T11:58:13Z"
  }
 }
