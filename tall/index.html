@@ -63,6 +63,10 @@ h2{font-size:15px;font-weight:600;margin:48px 0 4px}
 .flis svg{display:block;margin-top:8px}
 .flis .sekundaer{display:flex;flex-wrap:wrap;gap:2px 14px;color:var(--gra);font-size:12px;margin-top:6px}
 .flis .sekundaer b{color:var(--blekk);font-weight:500}
+.noktall{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.nok{border:1px solid var(--strek);border-radius:10px;padding:10px 14px}
+.nok .nv{font-size:24px;font-weight:600;margin:2px 0}
+.nok .nd{font-size:12.5px}
 .milepael{margin-top:8px;font-size:11.5px;color:var(--gra)}
 .milepael .spor{height:4px;border-radius:2px;background:var(--plan);margin-bottom:4px;overflow:hidden}
 .milepael .spor div{height:100%;border-radius:2px}
@@ -168,7 +172,9 @@ label.valg{font-size:12.5px;color:var(--gra);margin-left:8px;display:inline-flex
   <div class="rull" id="vekst"></div>
 
   <h2>Engasjement</h2>
-  <p class="h2under" id="engUnder">Innlegg publisert i perioden og responsen på dem. Svar og delinger av andres innlegg er ikke med.</p>
+  <p class="h2under" id="engUnder">Går det opp eller ned? Denne perioden mot forrige like lange periode. Svar og delinger av andres innlegg er ikke med.</p>
+  <div class="noktall" id="engTall"></div>
+  <div class="liten" style="margin:18px 0 6px">Samhandlinger siste 30 dager, dag for dag. Går kurven opp, får innleggene dine mer respons. Strekene langs bunnen er innlegg.</div>
   <div class="graf" id="engGraf" style="margin-bottom:18px"></div>
   <div class="rull" id="engasjement"></div>
 
@@ -580,38 +586,52 @@ function visInnlegg() {
   const m = el.querySelector("#mer"); if (m) m.onclick = () => { S.visAntall += 25; visInnlegg(); };
 }
 
+// Samhandlinger på innlegg publisert i [fra, til)
+function samhandlinger(fra, til) {
+  const a = D.innlegg.filter((x) => !x.svar && x.t >= fra && x.t < til);
+  const sum = (k) => a.reduce((s, x) => s + (Number.isFinite(x[k]) ? x[k] : 0), 0);
+  return { n: a.length, sam: a.reduce((s, x) => s + (x.samlet || 0), 0), vis: sum("visninger") };
+}
+function nokkeltall() {
+  const dager = S.periode, el = document.getElementById("engTall");
+  const naa = NAA, fra = dager == null ? -Infinity : naa - dager * DAG, forrigeFra = dager == null ? null : naa - 2 * dager * DAG;
+  const denne = samhandlinger(fra, naa + 1), forrige = forrigeFra == null ? null : samhandlinger(forrigeFra, fra);
+  // Mål som plattformene selv teller (siste 28 dager / LinkedIns periode): sammenlign siste måling med målingen en periode tilbake
+  const maaling = (pl, m) => { const s = serie(pl, m); const n = siste(s); if (!n) return null; const f = dager == null ? s[0] : verdiVed(s, naa - dager * DAG); return { v: n.v, f: f && f !== n ? f.v : null, s, forste: s[0].t }; };
+  const fliser = [
+    { navn: "Samhandlinger på innlegg", v: denne.sam, f: forrige && forrige.sam, hint: "likes, kommentarer og delinger på innlegg publisert i perioden" },
+    { navn: "Innlegg publisert", v: denne.n, f: forrige && forrige.n },
+    { navn: "Snitt per innlegg", v: denne.n ? denne.sam / denne.n : null, f: forrige && forrige.n ? forrige.sam / forrige.n : null, des: true },
+    { navn: "Visninger av innlegg", v: denne.vis, f: forrige && forrige.vis, hint: "LinkedIn" },
+  ];
+  for (const [pl, m, navn] of [["linkedin", "profilvisninger", "LinkedIn profilvisninger"], ["instagram", "profilbesok_28d", "Instagram profilbesøk (28 d)"], ["instagram", "rekkevidde_28d", "Instagram kontoer nådd (28 d)"], ["instagram", "visninger_28d", "Instagram visninger (28 d)"]]) {
+    const x = maaling(pl, m); if (x) fliser.push({ navn, v: x.v, f: x.f, siden: x.f == null ? x.forste : null });
+  }
+  const tall = (v, des) => v == null ? "–" : des ? pf.format(v) : nf.format(Math.round(v));
+  el.innerHTML = fliser.map((f) => {
+    let d = "";
+    if (f.f != null && f.v != null) {
+      const diff = f.v - f.f, pst = f.f >= 10 ? diff / f.f * 100 : null; // prosent av små tall sier lite
+      d = `<span class="${klasse(diff)}">${diff > 0 ? "▲" : diff < 0 ? "▼" : "●"} ${pst != null ? (pst >= 0 ? "+" : "−") + pf.format(Math.abs(pst)) + " %" : f.des ? (diff >= 0 ? "+" : "−") + pf.format(Math.abs(diff)) : tegn(Math.round(diff))}</span> <span class="liten">mot ${dager == null ? "start" : "forrige " + (dager === 365 ? "år" : dager + " d")} (${tall(f.f, f.des)})</span>`;
+    } else if (f.siden) d = `<span class="liten">måles fra ${datoKort.format(new Date(f.siden))}, trend kommer</span>`;
+    else if (dager == null) d = `<span class="liten">velg en periode for å sammenligne</span>`;
+    return `<div class="nok"><div class="liten">${f.navn}</div><div class="nv">${tall(f.v, f.des)}</div><div class="nd">${d}</div></div>`;
+  }).join("");
+}
 function engasjementGraf(fra) {
   const el = document.getElementById("engGraf");
-  const innl = D.innlegg.filter((x) => !x.svar && Number.isFinite(x.t) && x.t >= fra && x.samlet > 0 || (!x.svar && x.t >= fra));
+  const innl = D.innlegg.filter((x) => !x.svar && Number.isFinite(x.t));
   if (!innl.length) { el.innerHTML = ""; return; }
   const start = Math.max(fra, Math.min(...innl.map((x) => x.t)));
-  const uker = (NAA - start) / DAG <= 120;
-  const noekkel = (t) => { const d = new Date(t); if (uker) { const m = new Date(d); m.setHours(0, 0, 0, 0); m.setDate(m.getDate() - ((m.getDay() + 6) % 7)); return m.getTime(); } return new Date(d.getFullYear(), d.getMonth(), 1).getTime(); };
-  const boter = new Map();
-  for (let t = noekkel(start); t <= NAA; ) { boter.set(t, { v: 0, n: 0, per: {} }); const d = new Date(t); if (uker) d.setDate(d.getDate() + 7); else d.setMonth(d.getMonth() + 1); t = d.getTime(); }
-  for (const x of innl) { const b = boter.get(noekkel(x.t)); if (!b) continue; b.v += x.samlet || 0; b.n++; b.per[x.plattform] = (b.per[x.plattform] || 0) + (x.samlet || 0); }
-  const data = [...boter.entries()];
-  const B = el.clientWidth || 700, H = 190, ml = 40, mr = 8, mt = 16, mb = 26;
-  const maks = Math.max(1, ...data.map(([, b]) => b.v)), yt = pene(0, maks), y1 = yt[yt.length - 1];
-  const band = (B - ml - mr) / data.length, bw = Math.max(2, Math.min(24, band * 0.7));
-  const Y = (v) => mt + (1 - v / y1) * (H - mt - mb);
-  const fmt = new Intl.DateTimeFormat("nb-NO", uker ? { day: "numeric", month: "short" } : { month: "short", year: "2-digit" });
-  const hver = Math.max(1, Math.ceil(data.length / Math.floor((B - ml) / 70)));
-  let g = `<svg width="${B}" height="${H}" role="img" aria-label="Samhandlinger per ${uker ? "uke" : "måned"}">`;
-  for (const t of yt) g += `<line x1="${ml}" x2="${B - mr}" y1="${Y(t)}" y2="${Y(t)}" stroke="var(--strek)"/><text x="${ml - 8}" y="${Y(t) + 4}" text-anchor="end">${nf.format(t)}</text>`;
-  data.forEach(([t, b], i) => {
-    const x = ml + band * i + (band - bw) / 2, y = Y(b.v), h = H - mb - y, r = Math.min(4, h);
-    const tips = `${uker ? "Uken fra " : ""}${fmt.format(new Date(t))}: ${nf.format(b.v)} samhandlinger på ${b.n} innlegg` + Object.entries(b.per).map(([pl, v]) => `\n${P[pl].navn}: ${nf.format(v)}`).join("");
-    g += `<rect x="${ml + band * i}" y="${mt}" width="${band}" height="${H - mt - mb}" fill="transparent"><title>${tips}</title></rect>`;
-    if (h > 0) g += `<path d="M${x},${H - mb} V${y + r} Q${x},${y} ${x + r},${y} H${x + bw - r} Q${x + bw},${y} ${x + bw},${y + r} V${H - mb} Z" fill="#111" pointer-events="none"/>`;
-    if (i % hver === 0) g += `<text x="${x + bw / 2}" y="${H - 8}" text-anchor="middle">${fmt.format(new Date(t))}</text>`;
-  });
-  g += `<line x1="${ml}" x2="${B - mr}" y1="${H - mb}" y2="${H - mb}" stroke="var(--akse)"/></svg>`;
-  el.innerHTML = `<div class="liten" style="margin-bottom:6px">Samhandlinger (likes, kommentarer, delinger) per ${uker ? "uke" : "måned"}, etter når innlegget ble publisert. Hold over en søyle for fordeling per plattform.</div>` + g;
+  const steg = (NAA - start) / DAG > 400 ? 7 : 1;
+  const pkt = [];
+  for (let t = start; t <= NAA; t += steg * DAG) pkt.push({ t, v: innl.filter((x) => x.t > t - 30 * DAG && x.t <= t).reduce((s, x) => s + (x.samlet || 0), 0), kilde: "maalt" });
+  linjegraf(el, pkt, { farge: "#111111", fra: start, navn: "Samhandlinger siste 30 dager", enhet: "samhandlinger siste 30 dager", hoyde: 200, innlegg: innl.map((x) => ({ t: x.t, tekst: x.tekst || "" })) });
 }
 
 function visEngasjement() {
   const fra = fraTid();
+  nokkeltall();
   engasjementGraf(S.periode == null ? -Infinity : fra);
   const sum = (a, k) => a.reduce((s, x) => s + (Number.isFinite(x[k]) ? x[k] : 0), 0);
   const har = (a, k) => a.some((x) => Number.isFinite(x[k]));
