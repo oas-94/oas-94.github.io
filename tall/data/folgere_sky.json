@@ -1,0 +1,462 @@
+{
+ "bluesky": {
+  "did:plc:27gqmlgz4hzeagvy3xwylgq4": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "morbidtruth.bsky.social"
+  },
+  "did:plc:2tm7ygps6rv3bzmpl75vo4n7": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "supercamilla.bsky.social"
+  },
+  "did:plc:3cvkcdicswlle62pvhemmsqc": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "oispammy.bsky.social"
+  },
+  "did:plc:42eqn6mcia2srhiddfl6o3e6": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "trygve-t.bsky.social"
+  },
+  "did:plc:45ay3sonu3e6kfidykh3tymk": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "bobbyperu.bsky.social"
+  },
+  "did:plc:4chuvd4gqdxprz24qjfdkos3": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "bjarnebenjaminsen.bsky.social"
+  },
+  "did:plc:4wz5vzm7wdb3v6qc6icyyz5u": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "akselkv.bsky.social"
+  },
+  "did:plc:74o6x7q4ofkr5b6kwb7hvqh7": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "sgaarder.bsky.social"
+  },
+  "did:plc:7bioxns523r6m5iwjbtnk7vu": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "frenchbulldogus.bsky.social"
+  },
+  "did:plc:7wnuqswzv6kngujzjpusvsf5": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "2rvund.bsky.social"
+  },
+  "did:plc:a54t622tfodggdilwzjsozmy": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "erikma.bsky.social"
+  },
+  "did:plc:aasdqrztryprp3btvv5d6kex": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "johnny-randall.bsky.social"
+  },
+  "did:plc:b4clxx2tbsqfepizdv2ddfm2": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "tvermes.bsky.social"
+  },
+  "did:plc:b4oaxjm26cspkvlfiuscxezf": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "amstray.bsky.social"
+  },
+  "did:plc:bpq6ej7s2xedax6f65itwdp2": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "thorsepus.eurosky.social"
+  },
+  "did:plc:c2uj7islv4vn7sc2parjpeid": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "samaramahataz.bsky.social"
+  },
+  "did:plc:cxm6fk5rnokvuezqrhxvydub": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "louiseroer.bsky.social"
+  },
+  "did:plc:cz22t3ck5f6ndf7xuw3wufcp": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "forsker.bsky.social"
+  },
+  "did:plc:dgddajknd46fgmydy6xxrgap": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "rupertrivett.bsky.social"
+  },
+  "did:plc:dmk4t2e57vt7gizxqxfth7nr": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "dhzpod.bsky.social"
+  },
+  "did:plc:dngmfgu75n5jrghh3dorjh2b": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "iharsten.bsky.social"
+  },
+  "did:plc:e56eq6watpxqjfk2psvfgko5": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "ahvitstein.bsky.social"
+  },
+  "did:plc:e7nj4eoiqa6dyyyjzkiq46r6": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "larseide.bsky.social"
+  },
+  "did:plc:f5a3yk5ngfcbpcgknuepejln": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "torbae.bsky.social"
+  },
+  "did:plc:gk33mxfio33xfjbdibnwd4sm": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "omkalfater.bsky.social"
+  },
+  "did:plc:gqbh26izxc65447gapuam4fr": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "marentoft.bsky.social"
+  },
+  "did:plc:gqyjkszupwphbdxmhn3ijqh4": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "bjerkemo.bsky.social"
+  },
+  "did:plc:i2eg72xoxqlsdmxc7pxgpbav": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "waffles-mcgrawl.bsky.social"
+  },
+  "did:plc:i5jta4oqbv5twpv5ypknceyu": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "festlegen.bsky.social"
+  },
+  "did:plc:i7tpwcgnxnntza7nzmq2wj4q": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "candiedgoose.bsky.social"
+  },
+  "did:plc:iigfpfnauypoltmbsy6ezhgg": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "drumsgard.bsky.social"
+  },
+  "did:plc:j26op62b6ugspp3lb2iw4hv5": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "ellenstein.bsky.social"
+  },
+  "did:plc:jopvbxq5qvw4persu5agcesn": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "trondjs.eurosky.social"
+  },
+  "did:plc:knxfguib6gyiitxeyxow33d2": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "tmcoque.bsky.social"
+  },
+  "did:plc:kxzwyehxnpdzbm3ta3rgea2a": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "allseerx.bsky.social"
+  },
+  "did:plc:lhaec5e46ghter62xcnomdr5": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "footballchest.bsky.social"
+  },
+  "did:plc:lwucs6bl3ilor4wjecm4k5ks": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "dagatorp.bsky.social"
+  },
+  "did:plc:mvfwck66li2o6bcbnfjr5v2z": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "espenius.bsky.social"
+  },
+  "did:plc:nayghuhbnckyntjvpajdc7pb": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "kongmathias.bsky.social"
+  },
+  "did:plc:nopmoc4uaciejggbjgpvwucj": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "dmovies.bsky.social"
+  },
+  "did:plc:nr3h6odrvqpi4v6nnpgsup22": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "muskolini.bsky.social"
+  },
+  "did:plc:odgirs5h3yq7iok4wo6r75vc": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "joedegaa.bsky.social"
+  },
+  "did:plc:ogwvyfkx4klafu5lz22s2qz3": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "mareargent.bsky.social"
+  },
+  "did:plc:p53bwfuo4hejvtr7vkyyfapf": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "transferwatcher.bsky.social"
+  },
+  "did:plc:pe7xqlyompactmtw5hv442n7": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "ahmedhassan83.bsky.social"
+  },
+  "did:plc:phyvl6z6jpjv4e6ph43v6nl2": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "marenes.bsky.social"
+  },
+  "did:plc:pzjbshj5qkd4ljff7q4lm5pj": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "hognebp.bsky.social"
+  },
+  "did:plc:qk2sulvcf54wukrui57umthh": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "karleldarevang.bsky.social"
+  },
+  "did:plc:qoaay5xccail5bkj5wgvlf2k": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "willhgaze.bsky.social"
+  },
+  "did:plc:qwmghmmwr6kuqftdluxcd3ii": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "paaltromso.bsky.social"
+  },
+  "did:plc:qyyzpxnfchbojtlm4nalfni4": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "pksbertoli.bsky.social"
+  },
+  "did:plc:rbi45nar7dp4fepwwavwu45t": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "arvehj.bsky.social"
+  },
+  "did:plc:roxjsihcub5hpba3uxqz7yfr": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "cerasus13.bsky.social"
+  },
+  "did:plc:sjqok5raomcrtcl3xx5euld6": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "kjellron.bsky.social"
+  },
+  "did:plc:sly6tmj2dbl5lkev6ynp7ufd": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "laimonas.bsky.social"
+  },
+  "did:plc:stbf7ddf6qygkfa33xgajld5": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "treningkosthold.bsky.social"
+  },
+  "did:plc:ubi2vwd5uzsdv47gy5s57jbs": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "usasportshub.bsky.social"
+  },
+  "did:plc:um26wtzc5hivermqxvt6ahgq": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "gorgeforeman8.bsky.social"
+  },
+  "did:plc:v4nrkhttxdfibv4lzwhytwnt": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "vanebo.bsky.social"
+  },
+  "did:plc:v5ii3ff2qeyiw77gclwuxofb": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "esgya.bsky.social"
+  },
+  "did:plc:vrulkmw4kvpn77qns3jdeo6v": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "lurveleven.bsky.social"
+  },
+  "did:plc:vymk23dcw3rsxww3ffmv3n35": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "johnpearce650.bsky.social"
+  },
+  "did:plc:w2pzsjkeopklwwejs23hnzne": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "mrpimo.bsky.social"
+  },
+  "did:plc:w66iqrkrk3xkpuqlwkqyrw3h": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "nih-sport-sciences.bsky.social"
+  },
+  "did:plc:x2biel4vuqlbnkbxe6t5yu2x": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "ellingvag.bsky.social"
+  },
+  "did:plc:y3u3oqbekckyx3mljhqtxdcf": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "myrstad.bsky.social"
+  },
+  "did:plc:yuu577uyi4ybau2hprpxx3fh": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "landsbroderen.bsky.social"
+  },
+  "did:plc:yv5nhzox6aydm34fimeucbzl": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "jawa2024.bsky.social"
+  },
+  "did:plc:yw2hqcflxcujqz4qf4fpd4tm": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "christinaplett.bsky.social"
+  },
+  "did:plc:z4gadsngblwwlsdakgu7qolx": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "eminemini.bsky.social"
+  },
+  "did:plc:z5ber6bjuuaxmqt7g7o2pxmg": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "paalhal.bsky.social"
+  },
+  "did:plc:zuukqfxch2vnbchr62erw2qu": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "lenelid.bsky.social"
+  }
+ },
+ "mastodon": {
+  "1005975": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "bjoernstaerk@snabelen.no"
+  },
+  "1005977": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "Rudi@snabelen.no"
+  },
+  "1012604": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "enannenen@snabelen.no"
+  },
+  "108137391329949956": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "worldwidewerner"
+  },
+  "108198046850339980": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "bjorn2"
+  },
+  "108250887197848895": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "iakonkret@mstdn.social"
+  },
+  "109245954831704366": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "josefinisthlm@mastodon.nu"
+  },
+  "109256989882681979": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "atlefren@snabelen.no"
+  },
+  "109278943707423933": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "tanketom@tutoteket.no"
+  },
+  "109296767988735964": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "johank76@mastodon.nu"
+  },
+  "109310081927031153": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "jhamre@oslo.town"
+  },
+  "109330090840655703": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "Vigdisol@snabelen.no"
+  },
+  "109357741700528652": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "Stevekspo@fribygda.no"
+  },
+  "109365298103084207": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "ltning@anduin.net"
+  },
+  "109389588353129846": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "brekke@eupolicy.social"
+  },
+  "109400651763863493": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "hjelmen@snabelen.no"
+  },
+  "109406680981414410": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "fhekland@vivaldi.net"
+  },
+  "109524791701095766": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "forteller@tutoteket.no"
+  },
+  "110231435603015479": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "francis@babb.no"
+  },
+  "110644741969679423": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "tk@mastodon.green"
+  },
+  "110654387212285001": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "TanteGulo@snabelen.no"
+  },
+  "110669099469970036": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "luftvaffel@oslo.town"
+  },
+  "110714140621416183": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "cmyrland@tutoteket.no"
+  },
+  "110720089847964480": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "gauteweb@mikrobloggen.no"
+  },
+  "110726015594747712": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "dambakk@snabelen.no"
+  },
+  "110859228142042264": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "Jostein@social.stormsvale.no"
+  },
+  "111045195461383875": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "sotolf@alpha.polymaths.social"
+  },
+  "111556802832771800": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "balterwenjamin42"
+  },
+  "111670154016207289": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "Luuni@snabelen.no"
+  },
+  "112356356675633922": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "fiskelandslaget@vivaldi.net"
+  },
+  "112798234988126692": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "ellentm@snabelen.no"
+  },
+  "113647643858416032": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "sotolf@polymaths.social"
+  },
+  "113889432034897793": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "hjelmen@oslo.town"
+  },
+  "114261726143640676": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "de_baser"
+  },
+  "114899005165959483": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "agathos@babb.no"
+  },
+  "116744693158263600": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "gaute@social.gaute.space"
+  },
+  "1267875": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "slaeg@mastodon.online"
+  },
+  "1405856": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "brigeh@norden.social"
+  },
+  "26462": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "aslakr"
+  },
+  "422607": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "myrtilla"
+  },
+  "459735": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "eh@functional.cafe"
+  },
+  "755475": {
+   "forst": "2026-11-27T10:29:42Z",
+   "navn": "nightlynx@chaos.social"
+  }
+ }
+}

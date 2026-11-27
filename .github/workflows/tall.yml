@@ -1,0 +1,36 @@
+name: Tall fra åpne plattformer
+
+# Henter Bluesky, Mastodon og Google Scholar hver time og lagrer i tall/data.
+# Lagrer bare når noe har endret seg (eller hver sjette time), se tall_sky.py.
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tall
+  cancel-in-progress: false
+
+jobs:
+  hent:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Hent tall
+        run: python3 -I .github/scripts/tall_sky.py
+      - name: Lagre endringer
+        run: |
+          git config user.name "tall-robot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tall/data
+          if git diff --cached --quiet; then echo "ingen endring"; exit 0; fi
+          git commit -q -m "Tall fra åpne plattformer"
+          for i in 1 2 3; do
+            git pull -q --rebase origin main && git push -q origin HEAD:main && exit 0
+            sleep 15
+          done
+          exit 1

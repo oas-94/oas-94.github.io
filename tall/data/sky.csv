@@ -1,0 +1,12 @@
+tid,plattform,maal,verdi,kilde
+2026-11-27T10:29:42Z,bluesky,folgere,107,api
+2026-11-27T10:29:42Z,bluesky,folgere_aktive,72,api
+2026-11-27T10:29:42Z,bluesky,folger,279,api
+2026-11-27T10:29:42Z,bluesky,innlegg,43,api
+2026-11-27T10:29:42Z,mastodon,folgere,41,api
+2026-11-27T10:29:42Z,mastodon,folger,23,api
+2026-11-27T10:29:42Z,mastodon,innlegg,9,api
+2026-11-27T10:29:42Z,scholar,siteringer,128,side
+2026-11-27T10:29:42Z,scholar,h_indeks,5,side
+2026-11-27T10:29:42Z,scholar,i10_indeks,3,side
+2026-11-27T10:29:42Z,scholar,publikasjoner,28,side
