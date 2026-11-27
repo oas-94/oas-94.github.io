@@ -2,46 +2,46 @@
  "bluesky": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T15:21:47Z"
+  "sist_ok": "2026-11-27T15:27:24Z"
  },
  "facebook": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T15:21:47Z"
+  "sist_ok": "2026-11-27T15:27:24Z"
  },
  "instagram": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T15:21:47Z"
+  "sist_ok": "2026-11-27T15:27:24Z"
  },
  "linkedin": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T15:21:47Z"
+  "sist_ok": "2026-11-27T15:27:24Z"
  },
  "mastodon": {
-  "melding": "",
-  "ok": true,
+  "melding": "Failed to fetch",
+  "ok": false,
   "sist_ok": "2026-11-27T15:21:47Z"
  },
  "researchgate": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T15:21:47Z"
+  "sist_ok": "2026-11-27T15:27:24Z"
  },
  "scholar": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T15:21:47Z"
+  "sist_ok": "2026-11-27T15:27:24Z"
  },
  "tiktok": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T15:21:47Z"
+  "sist_ok": "2026-11-27T15:27:24Z"
  },
  "x": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T15:21:47Z"
+  "sist_ok": "2026-11-27T15:27:24Z"
  }
 }
