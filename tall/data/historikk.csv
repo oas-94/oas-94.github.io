@@ -281,7 +281,7 @@ tid,plattform,maal,verdi,kilde
 2026-10-19T23:59:59Z,linkedin,folgere,386,rekonstruert
 2026-10-22T23:59:59Z,linkedin,folgere,387,rekonstruert
 2026-11-26T23:59:59Z,linkedin,folgere,423,rekonstruert
-2026-11-27T23:59:59Z,linkedin,folgere,441,rekonstruert
+2026-11-27T23:59:59Z,linkedin,folgere,442,rekonstruert
 2019-01-07T23:59:59Z,linkedin,kontakter,1,rekonstruert
 2019-07-20T23:59:59Z,linkedin,kontakter,3,rekonstruert
 2019-07-24T23:59:59Z,linkedin,kontakter,4,rekonstruert
@@ -518,4 +518,16 @@ tid,plattform,maal,verdi,kilde
 2026-10-19T23:59:59Z,linkedin,kontakter,386,rekonstruert
 2026-10-22T23:59:59Z,linkedin,kontakter,387,rekonstruert
 2026-11-26T23:59:59Z,linkedin,kontakter,423,rekonstruert
-2026-11-27T23:59:59Z,linkedin,kontakter,441,rekonstruert
+2026-11-27T23:59:59Z,linkedin,kontakter,442,rekonstruert
+2024-11-14T23:59:59Z,mastodon,folgere,23,rekonstruert
+2024-11-15T23:59:59Z,mastodon,folgere,26,rekonstruert
+2024-11-17T23:59:59Z,mastodon,folgere,29,rekonstruert
+2024-11-18T23:59:59Z,mastodon,folgere,30,rekonstruert
+2024-11-26T23:59:59Z,mastodon,folgere,35,rekonstruert
+2024-11-29T23:59:59Z,mastodon,folgere,36,rekonstruert
+2024-12-16T23:59:59Z,mastodon,folgere,37,rekonstruert
+2025-01-25T23:59:59Z,mastodon,folgere,38,rekonstruert
+2025-04-01T23:59:59Z,mastodon,folgere,39,rekonstruert
+2025-07-11T23:59:59Z,mastodon,folgere,40,rekonstruert
+2025-07-22T23:59:59Z,mastodon,folgere,41,rekonstruert
+2026-06-14T23:59:59Z,mastodon,folgere,41,rekonstruert
