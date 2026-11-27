@@ -35,7 +35,7 @@ h2{font-size:15px;font-weight:600;margin:48px 0 4px}
 .prikk{display:inline-block;width:9px;height:9px;border-radius:50%;flex:none}
 
 /* Toppen: samlet publikum */
-.topp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:32px;align-items:end;padding-bottom:28px;border-bottom:1px solid var(--strek)}
+.topp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:32px;align-items:start;padding-bottom:28px;border-bottom:1px solid var(--strek)}
 .helt{font-size:56px;font-weight:600;line-height:1;letter-spacing:-.02em}
 .helt-merke{color:var(--gra);font-size:13px;margin-bottom:10px}
 .endring{font-size:14px;margin-top:10px}
@@ -136,8 +136,12 @@ label.valg{font-size:12.5px;color:var(--gra);margin-left:8px;display:inline-flex
       <div class="endring" id="totalEndring"></div>
       <div class="merknad" id="totalMerknad"></div>
       <div class="endring" id="unike"></div>
+
     </div>
     <div class="fordeling">
+      <div class="helt-merke">Samlet publikum over tid</div>
+      <div class="graf" id="totalGraf"></div>
+      <div class="merknad" id="totalGrafMerknad" style="margin-bottom:16px"></div>
       <div class="helt-merke">Fordeling på plattformene</div>
       <div class="bar" id="fordeling" role="img"></div>
       <div class="forklaring" id="fordelingForklaring"></div>
@@ -423,6 +427,18 @@ function visTopp() {
     const u = sum - D.unike.overlapp;
     document.getElementById("unike").innerHTML = `<b>≈ ${nf.format(u)}</b> unike personer <span class="liten">· ${nf.format(D.unike.paa_flere)} følger deg flere steder (funnet på navn, så et anslag)</span>`;
   }
+  // Samlet publikum over tid: summen av plattformene som var målt (eller rekonstruert) på hvert tidspunkt
+  const pls = REKKEFOLGE.filter((pl) => !P[pl].ikkePublikum && serie(pl, P[pl].hoved).length);
+  const tider = [...new Set(pls.flatMap((pl) => serie(pl, P[pl].hoved).map((p) => p.t)))].sort((a, b) => a - b);
+  const forsteEkte = Object.fromEntries(pls.map((pl) => [pl, (serie(pl, P[pl].hoved).find((p) => p.kilde !== "rekonstruert") || {}).t]));
+  const total = tider.map((t) => {
+    let v = 0, rek = false;
+    for (const pl of pls) { const p = verdiVed(serie(pl, P[pl].hoved), t); if (p) { v += p.v; if (p.kilde === "rekonstruert") rek = true; } }
+    return { t, v, kilde: rek ? "rekonstruert" : "maalt" };
+  });
+  linjegraf(document.getElementById("totalGraf"), total, { farge: "#111111", fra: S.periode == null ? undefined : fraTid(), navn: "Samlet publikum", enhet: "samlet", hoyde: 140 });
+  const sene = pls.filter((pl) => !serie(pl, P[pl].hoved).some((p) => p.kilde === "rekonstruert")).map((pl) => P[pl].navn);
+  document.getElementById("totalGrafMerknad").innerHTML = `<span class="strek"></span>Stiplet der minst én plattform er rekonstruert.` + (sene.length ? ` ${sene.join(", ")} har ingen historikk og er med fra første måling, så kurven hopper da.` : "");
   const fe = document.getElementById("fordeling");
   fe.innerHTML = deler.map(([pl, v]) => {
     const andel = v / sum * 100;
