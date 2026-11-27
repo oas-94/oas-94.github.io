@@ -165,6 +165,10 @@ label.valg{font-size:12.5px;color:var(--gra);margin-left:8px;display:inline-flex
   <p class="h2under">Netto endring i hovedtallet for hver plattform. Prosent er vekst siste 30 dager.</p>
   <div class="rull" id="vekst"></div>
 
+  <h2>Engasjement</h2>
+  <p class="h2under" id="engUnder">Innlegg publisert i perioden og responsen på dem. Svar og delinger av andres innlegg er ikke med.</p>
+  <div class="rull" id="engasjement"></div>
+
   <h2>Innlegg</h2>
   <p class="h2under">Alle innlegg, uansett periode. Engasjement er likes, kommentarer, delinger og sitater delt på antall følgere da innlegget ble publisert. Nye følgere er endringen de sju dagene etter.</p>
   <div class="filter" id="innleggFilter"></div>
@@ -192,7 +196,7 @@ label.valg{font-size:12.5px;color:var(--gra);margin-left:8px;display:inline-flex
 "use strict";
 // ---------- Oppsett ----------
 const P = {
-  linkedin:  { navn: "LinkedIn",  farge: "#257de0", hoved: "folgere", enhet: "følgere", andre: [["kontakter", "kontakter"]], kilde: "Edge-utvidelsen",
+  linkedin:  { navn: "LinkedIn",  farge: "#257de0", hoved: "folgere", enhet: "følgere", andre: [["kontakter", "kontakter"], ["profilvisninger", "profilvisninger"], ["sok", "søketreff"]], kilde: "Edge-utvidelsen",
     rek: "Rekonstruert fra datoen hver nåværende kontakt ble knyttet. Kontakter følger deg automatisk, så kurven er et minimum: kontakter som er fjernet og følgere som ikke er kontakter, er ikke med.", lenke: "https://www.linkedin.com/in/orjansamuelsen/" },
   facebook:  { navn: "Facebook",  farge: "#6a4ce2", hoved: "venner", enhet: "venner", andre: [["folgere", "følgere"]], kilde: "Edge-utvidelsen",
     rek: "Rekonstruert fra datoen hver nåværende venn ble venn (dataeksport). Venner som er fjernet, er ikke med, så kurven er et minimum.", lenke: "https://www.facebook.com/" },
@@ -572,6 +576,25 @@ function visInnlegg() {
   const m = el.querySelector("#mer"); if (m) m.onclick = () => { S.visAntall += 25; visInnlegg(); };
 }
 
+function visEngasjement() {
+  const fra = fraTid();
+  const sum = (a, k) => a.reduce((s, x) => s + (Number.isFinite(x[k]) ? x[k] : 0), 0);
+  const har = (a, k) => a.some((x) => Number.isFinite(x[k]));
+  let h = `<table><thead><tr><th>Plattform</th><th>Innlegg</th><th>Likes</th><th>Kommentarer</th><th>Delinger</th><th>Visninger</th><th>Snitt per innlegg</th><th>Engasjementsrate</th></tr></thead><tbody>`;
+  let rader = 0;
+  for (const pl of REKKEFOLGE) {
+    const a = D.innlegg.filter((x) => x.plattform === pl && !x.svar && x.t >= fra);
+    const alle = D.innlegg.filter((x) => x.plattform === pl);
+    if (!alle.length) continue;
+    rader++;
+    const samlet = sum(a, "samlet"), rater = a.map((x) => x.eng).filter(Number.isFinite);
+    const c = (k) => har(alle, k) ? nf.format(sum(a, k)) : '<span class="null">–</span>';
+    h += `<tr><td><span class="plattform"><i class="prikk" style="background:${P[pl].farge}"></i>${P[pl].navn}</span></td><td>${a.length}</td><td>${c("likes")}</td><td>${c("kommentarer")}</td><td>${c("delinger")}</td><td>${c("visninger")}</td>
+      <td>${a.length ? pf.format(samlet / a.length) : '<span class="null">–</span>'}</td><td>${rater.length ? pf.format(rater.reduce((x, y) => x + y, 0) / rater.length) + " %" : '<span class="null">–</span>'}</td></tr>`;
+  }
+  document.getElementById("engasjement").innerHTML = rader ? h + `</tbody></table><div class="merknad">Engasjementsrate: likes, kommentarer, delinger og sitater delt på følgerne da innlegget ble publisert, i snitt. Instagram og Facebook mangler tall per innlegg til Meta-appen er på plass.</div>` : `<div class="liten">Ingen innlegg ennå.</div>`;
+}
+
 function visFolk() {
   const el = document.getElementById("folk");
   let h = "";
@@ -628,7 +651,7 @@ function visKilder() {
 }
 
 function alt() {
-  visPerioder(); visTopp(); visFliser(); visDetalj(); visVekst(); visInnlegg(); visFolk(); visScholar(); visKilder();
+  visPerioder(); visTopp(); visFliser(); visDetalj(); visVekst(); visEngasjement(); visInnlegg(); visFolk(); visScholar(); visKilder();
 }
 
 async function start() {
