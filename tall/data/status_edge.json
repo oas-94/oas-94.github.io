@@ -2,26 +2,26 @@
  "facebook": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T10:46:05Z"
+  "sist_ok": "2026-11-27T10:51:18Z"
  },
  "instagram": {
-  "melding": "www.instagram.com svarte 404",
-  "ok": false,
-  "sist_ok": null
+  "melding": "",
+  "ok": true,
+  "sist_ok": "2026-11-27T10:51:18Z"
  },
  "linkedin": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T10:46:05Z"
+  "sist_ok": "2026-11-27T10:51:18Z"
  },
  "scholar": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T10:46:05Z"
+  "sist_ok": "2026-11-27T10:51:18Z"
  },
  "x": {
-  "melding": "fant ingen tall",
-  "ok": false,
-  "sist_ok": null
+  "melding": "",
+  "ok": true,
+  "sist_ok": "2026-11-27T10:51:18Z"
  }
 }
