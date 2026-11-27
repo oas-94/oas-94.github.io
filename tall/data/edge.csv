@@ -12,21 +12,18 @@ tid,plattform,maal,verdi,kilde
 2026-11-27T10:56:30Z,linkedin,kontakter,441,edge
 2026-11-27T10:56:30Z,facebook,folgere,605,edge
 2026-11-27T10:56:30Z,facebook,venner,501,edge
-2026-11-27T10:56:30Z,instagram,folgere,170,edge
 2026-11-27T10:56:30Z,instagram,folger,403,edge
 2026-11-27T10:56:30Z,instagram,innlegg,4,edge
 2026-11-27T11:22:07Z,linkedin,folgere,447,edge
 2026-11-27T11:22:07Z,linkedin,kontakter,441,edge
 2026-11-27T11:22:07Z,facebook,folgere,605,edge
 2026-11-27T11:22:07Z,facebook,venner,501,edge
-2026-11-27T11:22:07Z,instagram,folgere,170,edge
 2026-11-27T11:22:07Z,instagram,folger,403,edge
 2026-11-27T11:22:07Z,instagram,innlegg,4,edge
 2026-11-27T11:27:19Z,linkedin,folgere,448,edge
 2026-11-27T11:27:19Z,linkedin,kontakter,442,edge
 2026-11-27T11:27:19Z,facebook,folgere,605,edge
 2026-11-27T11:27:19Z,facebook,venner,501,edge
-2026-11-27T11:27:19Z,instagram,folgere,170,edge
 2026-11-27T11:27:19Z,instagram,folger,403,edge
 2026-11-27T11:27:19Z,instagram,innlegg,4,edge
 2026-11-27T11:27:19Z,scholar,siteringer,72,edge
@@ -37,7 +34,6 @@ tid,plattform,maal,verdi,kilde
 2026-11-27T11:42:46Z,linkedin,kontakter,442,edge
 2026-11-27T11:42:46Z,facebook,folgere,605,edge
 2026-11-27T11:42:46Z,facebook,venner,501,edge
-2026-11-27T11:42:46Z,instagram,folgere,170,edge
 2026-11-27T11:42:46Z,instagram,folger,403,edge
 2026-11-27T11:42:46Z,instagram,innlegg,4,edge
 2026-11-27T11:42:46Z,scholar,siteringer,72,edge
@@ -55,7 +51,6 @@ tid,plattform,maal,verdi,kilde
 2026-11-27T11:58:13Z,linkedin,kontakter,442,edge
 2026-11-27T11:58:13Z,facebook,folgere,605,edge
 2026-11-27T11:58:13Z,facebook,venner,501,edge
-2026-11-27T11:58:13Z,instagram,folgere,170,edge
 2026-11-27T11:58:13Z,instagram,folger,403,edge
 2026-11-27T11:58:13Z,instagram,innlegg,4,edge
 2026-11-27T11:58:13Z,x,folgere,13,edge
@@ -76,7 +71,6 @@ tid,plattform,maal,verdi,kilde
 2026-11-27T12:18:39Z,linkedin,kontakter,442,edge
 2026-11-27T12:18:39Z,facebook,folgere,605,edge
 2026-11-27T12:18:39Z,facebook,venner,501,edge
-2026-11-27T12:18:39Z,instagram,folgere,170,edge
 2026-11-27T12:18:39Z,instagram,folger,403,edge
 2026-11-27T12:18:39Z,instagram,innlegg,4,edge
 2026-11-27T12:18:39Z,x,folgere,13,edge
@@ -104,7 +98,6 @@ tid,plattform,maal,verdi,kilde
 2026-11-27T12:33:52Z,linkedin,kontakter,442,edge
 2026-11-27T12:33:52Z,facebook,folgere,605,edge
 2026-11-27T12:33:52Z,facebook,venner,501,edge
-2026-11-27T12:33:52Z,instagram,folgere,170,edge
 2026-11-27T12:33:52Z,instagram,folger,403,edge
 2026-11-27T12:33:52Z,instagram,innlegg,4,edge
 2026-11-27T12:33:52Z,x,folgere,13,edge
@@ -136,7 +129,6 @@ tid,plattform,maal,verdi,kilde
 2026-11-27T12:49:06Z,linkedin,kontakter,443,edge
 2026-11-27T12:49:06Z,facebook,folgere,605,edge
 2026-11-27T12:49:06Z,facebook,venner,501,edge
-2026-11-27T12:49:06Z,instagram,folgere,170,edge
 2026-11-27T12:49:06Z,instagram,folger,403,edge
 2026-11-27T12:49:06Z,instagram,innlegg,4,edge
 2026-11-27T12:49:06Z,x,folgere,13,edge
@@ -168,7 +160,6 @@ tid,plattform,maal,verdi,kilde
 2026-11-27T12:54:18Z,linkedin,kontakter,444,edge
 2026-11-27T12:54:18Z,facebook,folgere,605,edge
 2026-11-27T12:54:18Z,facebook,venner,501,edge
-2026-11-27T12:54:18Z,instagram,folgere,170,edge
 2026-11-27T12:54:18Z,instagram,folger,403,edge
 2026-11-27T12:54:18Z,instagram,innlegg,4,edge
 2026-11-27T12:54:18Z,x,folgere,13,edge
@@ -200,7 +191,6 @@ tid,plattform,maal,verdi,kilde
 2026-11-27T13:07:15Z,linkedin,kontakter,445,edge
 2026-11-27T13:07:15Z,facebook,folgere,606,edge
 2026-11-27T13:07:15Z,facebook,venner,502,edge
-2026-11-27T13:07:15Z,instagram,folgere,170,edge
 2026-11-27T13:07:15Z,instagram,folger,403,edge
 2026-11-27T13:07:15Z,instagram,innlegg,4,edge
 2026-11-27T13:07:15Z,x,folgere,13,edge
@@ -232,7 +222,6 @@ tid,plattform,maal,verdi,kilde
 2026-11-27T14:15:36Z,linkedin,kontakter,447,edge
 2026-11-27T14:15:36Z,facebook,folgere,606,edge
 2026-11-27T14:15:36Z,facebook,venner,502,edge
-2026-11-27T14:15:36Z,instagram,folgere,170,edge
 2026-11-27T14:15:36Z,instagram,folger,402,edge
 2026-11-27T14:15:36Z,instagram,innlegg,4,edge
 2026-11-27T14:15:36Z,x,folgere,13,edge
@@ -264,7 +253,6 @@ tid,plattform,maal,verdi,kilde
 2026-11-27T14:20:50Z,linkedin,kontakter,447,edge
 2026-11-27T14:20:50Z,facebook,folgere,606,edge
 2026-11-27T14:20:50Z,facebook,venner,502,edge
-2026-11-27T14:20:50Z,instagram,folgere,170,edge
 2026-11-27T14:20:50Z,instagram,folger,403,edge
 2026-11-27T14:20:50Z,instagram,innlegg,4,edge
 2026-11-27T14:20:50Z,x,folgere,13,edge
@@ -296,7 +284,6 @@ tid,plattform,maal,verdi,kilde
 2026-11-27T14:36:02Z,linkedin,kontakter,447,edge
 2026-11-27T14:36:02Z,facebook,folgere,606,edge
 2026-11-27T14:36:02Z,facebook,venner,502,edge
-2026-11-27T14:36:02Z,instagram,folgere,170,edge
 2026-11-27T14:36:02Z,instagram,folger,404,edge
 2026-11-27T14:36:02Z,instagram,innlegg,4,edge
 2026-11-27T14:36:02Z,x,folgere,13,edge
@@ -329,7 +316,6 @@ tid,plattform,maal,verdi,kilde
 2026-11-27T14:46:17Z,linkedin,profilvisninger,43,edge
 2026-11-27T14:46:17Z,facebook,folgere,606,edge
 2026-11-27T14:46:17Z,facebook,venner,502,edge
-2026-11-27T14:46:17Z,instagram,folgere,170,edge
 2026-11-27T14:46:17Z,instagram,folger,404,edge
 2026-11-27T14:46:17Z,instagram,innlegg,4,edge
 2026-11-27T14:46:17Z,x,folgere,13,edge
