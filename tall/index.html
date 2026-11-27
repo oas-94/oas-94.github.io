@@ -184,15 +184,16 @@ label.valg{font-size:12.5px;color:var(--gra);margin-left:8px;display:inline-flex
 "use strict";
 // ---------- Oppsett ----------
 const P = {
-  linkedin:  { navn: "LinkedIn",  farge: "#257de0", hoved: "folgere", enhet: "følgere", andre: [["kontakter", "kontakter"]], kilde: "Edge-utvidelsen", lenke: "https://www.linkedin.com/in/orjansamuelsen/" },
-  facebook:  { navn: "Facebook",  farge: "#6a4ce2", hoved: "venner", enhet: "venner", andre: [["folgere", "følgere"]], kilde: "Edge-utvidelsen", lenke: "https://www.facebook.com/" },
+  linkedin:  { navn: "LinkedIn",  farge: "#257de0", hoved: "folgere", enhet: "følgere", andre: [["kontakter", "kontakter"]], kilde: "Edge-utvidelsen",
+    rek: "Rekonstruert fra datoen hver nåværende kontakt ble knyttet. Kontakter følger deg automatisk, så kurven er et minimum: kontakter som er fjernet og følgere som ikke er kontakter, er ikke med.", lenke: "https://www.linkedin.com/in/orjansamuelsen/" },
+  facebook:  { navn: "Facebook",  farge: "#6a4ce2", hoved: "venner", enhet: "venner", andre: [["folgere", "følgere"]], kilde: "Edge-utvidelsen",
+    rek: "Rekonstruert fra datoen hver nåværende venn ble venn (dataeksport). Venner som er fjernet, er ikke med, så kurven er et minimum.", lenke: "https://www.facebook.com/" },
   instagram: { navn: "Instagram", farge: "#ee7fac", hoved: "folgere", enhet: "følgere", andre: [["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Edge-utvidelsen", lenke: "https://www.instagram.com/", lys: true },
-  x:         { navn: "X",         farge: "#f47230", hoved: "folgere", enhet: "følgere", andre: [["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Edge-utvidelsen", lenke: "https://x.com/orjansamuelsen", lys: true },
   bluesky:   { navn: "Bluesky",   farge: "#00b894", hoved: "folgere_aktive", enhet: "aktive følgere", andre: [["folgere", "i profilen"], ["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Åpent API, hver time", lenke: "https://bsky.app/profile/orjansamuelsen.no", lys: true },
   mastodon:  { navn: "Mastodon",  farge: "#f2a600", hoved: "folgere", enhet: "følgere", andre: [["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Åpent API, hver time", lenke: "https://mastodon.social/@orjansamuelsen", lys: true },
   scholar:   { navn: "Scholar",   farge: "#008a17", hoved: "siteringer", enhet: "siteringer", andre: [["h_indeks", "h-indeks"], ["i10_indeks", "i10"], ["publikasjoner", "publikasjoner"]], kilde: "Edge-utvidelsen (Google sperrer skyen)", lenke: "https://scholar.google.com/citations?user=1qEn9ZQAAAAJ", ikkePublikum: true },
 };
-const REKKEFOLGE = ["linkedin", "facebook", "instagram", "x", "bluesky", "mastodon", "scholar"];
+const REKKEFOLGE = ["linkedin", "facebook", "instagram", "bluesky", "mastodon", "scholar"];
 const PERIODER = [["7 d", 7], ["30 d", 30], ["90 d", 90], ["1 år", 365], ["Alt", null]];
 const DAG = 864e5;
 const NAA = Date.now();
@@ -452,7 +453,7 @@ function visDetalj() {
   linjegraf(document.getElementById("graf"), s, { farge: c.farge, fra: S.periode == null ? undefined : fraTid(), navn: c.navn, enhet: c.enhet, innlegg: innl });
   const rek = s.some((p) => p.kilde === "rekonstruert");
   document.getElementById("grafMerknad").innerHTML =
-    (rek ? `<span class="strek"></span>Rekonstruert fra når dagens følgere begynte å følge. Det er et minimum, for de som har sluttet å følge er ikke med. ` : "") +
+    (rek ? `<span class="strek"></span>${c.rek || "Rekonstruert fra når dagens følgere begynte å følge. Det er et minimum, for de som har sluttet å følge er ikke med."} ` : "") +
     (innl.length ? "Strekene langs bunnen er innlegg. " : "") +
     (s.length ? `Første måling ${datoAar.format(new Date(s[0].t))}.` : "");
   // Tabell med alle mål
