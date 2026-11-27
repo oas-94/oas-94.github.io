@@ -227,7 +227,7 @@ const pf = new Intl.NumberFormat("nb-NO", { maximumFractionDigits: 1, minimumFra
 const datoKort = new Intl.DateTimeFormat("nb-NO", { day: "numeric", month: "short" });
 const datoAar = new Intl.DateTimeFormat("nb-NO", { day: "numeric", month: "short", year: "numeric" });
 const maaned = new Intl.DateTimeFormat("nb-NO", { month: "short", year: "2-digit" });
-const tidF = new Intl.DateTimeFormat("nb-NO", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+const tidF = new Intl.DateTimeFormat("nb-NO", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
 
 const S = { periode: 30, valgt: "linkedin", innleggFilter: "alle", visSvar: false, sorter: ["tid", -1], visAntall: 25 };
 try { Object.assign(S, JSON.parse(localStorage.getItem("tall-valg") || "{}")); } catch (e) {}
@@ -379,7 +379,7 @@ function linjegraf(el, s, o) {
     const p = verdiVed(ekte, t) || ekte[0];
     kryss.setAttribute("x1", mx); kryss.setAttribute("x2", mx); kryss.setAttribute("visibility", "visible");
     kp.setAttribute("cx", mx); kp.setAttribute("cy", Y(p.v)); kp.setAttribute("visibility", "visible");
-    let h = `<div class="t">${tidF.format(new Date(t))}</div><b>${nf.format(p.v)}</b> ${esc(o.enhet)}${p.kilde === "rekonstruert" ? ' <span class="t">(rekonstruert)</span>' : ""}`;
+    let h = `<div class="t">${(p.kilde === "rekonstruert" || til - fra > 120 * DAG ? datoAar : tidF).format(new Date(t))}</div><b>${nf.format(p.v)}</b> ${esc(o.enhet)}${p.kilde === "rekonstruert" ? ' <span class="t">(rekonstruert)</span>' : ""}`;
     if (nær) h += `<div class="tekst">Innlegg: ${esc(nær.tekst.slice(0, 120))}</div>`;
     visTips(h, e.clientX, e.clientY);
   });
