@@ -1,22 +1,32 @@
 {
+ "bluesky": {
+  "melding": "",
+  "ok": true,
+  "sist_ok": "2026-11-27T11:42:46Z"
+ },
  "facebook": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T11:32:31Z"
+  "sist_ok": "2026-11-27T11:42:46Z"
  },
  "instagram": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T11:32:31Z"
+  "sist_ok": "2026-11-27T11:42:46Z"
  },
  "linkedin": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T11:32:31Z"
+  "sist_ok": "2026-11-27T11:42:46Z"
+ },
+ "mastodon": {
+  "melding": "",
+  "ok": true,
+  "sist_ok": "2026-11-27T11:42:46Z"
  },
  "scholar": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T11:32:31Z"
+  "sist_ok": "2026-11-27T11:42:46Z"
  }
 }
