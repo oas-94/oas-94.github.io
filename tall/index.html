@@ -62,6 +62,9 @@ h2{font-size:15px;font-weight:600;margin:48px 0 4px}
 .flis svg{display:block;margin-top:8px}
 .flis .sekundaer{display:flex;flex-wrap:wrap;gap:2px 14px;color:var(--gra);font-size:12px;margin-top:6px}
 .flis .sekundaer b{color:var(--blekk);font-weight:500}
+.milepael{margin-top:8px;font-size:11.5px;color:var(--gra)}
+.milepael .spor{height:4px;border-radius:2px;background:var(--plan);margin-bottom:4px;overflow:hidden}
+.milepael .spor div{height:100%;border-radius:2px}
 .flis.tom .verdi{color:var(--svak);font-size:18px;font-weight:500}
 
 /* Detaljgrafen */
@@ -195,7 +198,7 @@ const P = {
   bluesky:   { navn: "Bluesky",   farge: "#00b894", hoved: "folgere_aktive", enhet: "aktive følgere", andre: [["folgere", "i profilen"], ["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Åpent API, fra Edge og skyen", lenke: "https://bsky.app/profile/orjansamuelsen.no", lys: true },
   mastodon:  { navn: "Mastodon",  farge: "#f2a600", hoved: "folgere", enhet: "følgere", andre: [["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Åpent API, fra Edge og skyen", lenke: "https://mastodon.social/@orjansamuelsen", lys: true },
   researchgate: { navn: "ResearchGate", farge: "#ec4647", hoved: "folgere", enhet: "følgere", andre: [["lesninger", "lesninger"], ["siteringer", "siteringer"], ["folger", "følger selv"]], kilde: "Edge-utvidelsen", lenke: "https://www.researchgate.net/profile/Orjan-Samuelsen-2", ikkePublikum: true },
-  scholar:   { navn: "Scholar",   farge: "#008a17", hoved: "siteringer", enhet: "siteringer", andre: [["h_indeks", "h-indeks"], ["i10_indeks", "i10"], ["publikasjoner", "publikasjoner"]], kilde: "Edge-utvidelsen (Google sperrer skyen)", lenke: "https://scholar.google.com/citations?user=1qEn9ZQAAAAJ", ikkePublikum: true },
+  scholar:   { navn: "Scholar",   farge: "#008a17", hoved: "siteringer", enhet: "siteringer", rek: "Bakover: siteringene per år slik Scholar viser dem, lagt sammen ved hvert årsskifte.", andre: [["h_indeks", "h-indeks"], ["i10_indeks", "i10"], ["publikasjoner", "publikasjoner"]], kilde: "Edge-utvidelsen (Google sperrer skyen)", lenke: "https://scholar.google.com/citations?user=1qEn9ZQAAAAJ", ikkePublikum: true },
 };
 const REKKEFOLGE = ["linkedin", "facebook", "instagram", "x", "tiktok", "bluesky", "mastodon", "researchgate", "scholar"];
 const PERIODER = [["7 d", 7], ["30 d", 30], ["90 d", 90], ["1 år", 365], ["Alt", null]];
@@ -429,6 +432,24 @@ function visTopp() {
   document.getElementById("fordelingForklaring").innerHTML = deler.map(([pl, v]) => `<span><i class="prikk" style="background:${P[pl].farge}"></i>${P[pl].navn} ${nf.format(v)}</span>`).join("");
 }
 
+// Neste runde tall og når det nås i tempoet fra de siste 90 dagene
+const TRAPP = [50, 100, 250, 500, 1000, 1500, 2500, 5000, 10000, 25000, 50000, 100000];
+function milepael(s) {
+  const n = siste(s); if (!n) return null;
+  const mal = TRAPP.find((m) => m > n.v); if (!mal) return null;
+  const f = verdiVed(s, NAA - 90 * DAG) || s[0];
+  const dager = (n.t - f.t) / DAG;
+  const tempo = dager >= 30 ? (n.v - f.v) / dager : null;
+  let naar = "";
+  if (tempo > 0) { const d = (mal - n.v) / tempo; naar = d > 3650 ? "over ti år i dagens tempo" : "ca. " + new Intl.DateTimeFormat("nb-NO", { month: "long", year: "numeric" }).format(new Date(NAA + d * DAG)) + " i dagens tempo"; }
+  else if (tempo !== null) naar = "ingen vekst siste 90 dager";
+  return { mal, igjen: mal - n.v, naar, andel: n.v / mal };
+}
+function milepaelHtml(m, farge) {
+  if (!m) return "";
+  return `<div class="milepael"><div class="spor"><div style="width:${Math.min(100, m.andel * 100)}%;background:${farge}"></div></div><span>${nf.format(m.igjen)} til ${nf.format(m.mal)}${m.naar ? " · " + m.naar : ""}</span></div>`;
+}
+
 function visFliser() {
   const fra = fraTid();
   const el = document.getElementById("fliser");
@@ -446,7 +467,7 @@ function visFliser() {
       <div class="verdi">${nf.format(siste(s).v)}</div><div class="enhet">${c.enhet}</div>
       <div class="delta">${delta}</div>
       ${minigraf(s, c.farge, Math.max(fra, s[0].t))}
-      <div class="sekundaer">${sek}</div></button>`;
+      <div class="sekundaer">${sek}</div>${milepaelHtml(milepael(s), c.farge)}</button>`;
   }).join("");
   el.onclick = (e) => { const b = e.target.closest(".flis"); if (!b) return; S.valgt = b.dataset.p; husk(); visFliser(); visDetalj(); document.getElementById("faner").scrollIntoView({ behavior: "smooth", block: "start" }); };
 }
@@ -601,6 +622,14 @@ async function start() {
     hentJson("status_sky.json"), hentJson("status_edge.json"), hentJson("folgere_sky.json"), hentJson("unike.json"),
   ]);
   const rader = [...lesCsv(hist), ...lesCsv(sky), ...lesCsv(edge)];
+  const sch0 = [sch, sche].filter(Boolean).sort((a, b) => (b.tid || "").localeCompare(a.tid || ""))[0];
+  if (sch0 && sch0.per_aar) {
+    let kum = 0; const iAar = new Date().getFullYear();
+    for (const aar of Object.keys(sch0.per_aar).sort()) {
+      kum += sch0.per_aar[aar];
+      if (+aar < iAar) rader.push({ tid: `${aar}-12-31T23:59:59Z`, plattform: "scholar", maal: "siteringer", verdi: String(kum), kilde: "rekonstruert" });
+    }
+  }
   for (const r of rader) {
     const v = Number(r.verdi), t = Date.parse(r.tid);
     if (!P[r.plattform] || !Number.isFinite(v) || !Number.isFinite(t)) continue;
