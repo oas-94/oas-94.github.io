@@ -474,6 +474,44 @@
    "url": "https://bsky.app/profile/orjansamuelsen.no/post/3lbrg5cokt22p"
   }
  ],
+ "instagram": [
+  {
+   "id": "18000087986800412",
+   "kommentarer": 0,
+   "likes": 28,
+   "tekst": "",
+   "tid": "2025-07-01T16:34:03Z",
+   "type": "CAROUSEL_ALBUM",
+   "url": "https://www.instagram.com/p/DLknEKZNn5r/"
+  },
+  {
+   "id": "18063428867023233",
+   "kommentarer": 1,
+   "likes": 22,
+   "tekst": "",
+   "tid": "2025-05-17T16:12:55Z",
+   "type": "CAROUSEL_ALBUM",
+   "url": "https://www.instagram.com/p/DJws4ENNE2H/"
+  },
+  {
+   "id": "18380088727136562",
+   "kommentarer": 0,
+   "likes": 12,
+   "tekst": "",
+   "tid": "2025-05-12T16:59:56Z",
+   "type": "IMAGE",
+   "url": "https://www.instagram.com/p/DJj6SBBtnaH/"
+  },
+  {
+   "id": "18085569175567822",
+   "kommentarer": 4,
+   "likes": 22,
+   "tekst": "",
+   "tid": "2025-05-02T15:07:06Z",
+   "type": "IMAGE",
+   "url": "https://www.instagram.com/p/DJJ9a2AtiUi/"
+  }
+ ],
  "linkedin": [
   {
    "delinger": 1,
@@ -484,7 +522,7 @@
    "tekst": "Det har vært mye snakk om vold og trusler i skolen den siste tiden.\n\nHeldigvis har jeg og Elin Borg allerede skrevet en rapport om temaet på oppdrag fra Utdanningsdirektoratet som du kan lese her: https://lnkd.in/eN9NXNy2.\n\nDer fant vi blant annet at hele 80 prosent av rektorene ",
    "tid": "2026-11-25T08:05:53.348Z",
    "url": "https://www.linkedin.com/feed/update/urn:li:activity:7531266900904038400/",
-   "visninger": 650
+   "visninger": 747
   },
   {
    "delinger": 1,
@@ -495,7 +533,7 @@
    "tekst": "Kudos til Hamar Arbeiderblad for å sette søkelys på en så viktig sak som vold og trusler i norsk skole.",
    "tid": "2026-11-07T07:08:51.344Z",
    "url": "https://www.linkedin.com/feed/update/urn:li:activity:7524729566398087168/",
-   "visninger": 660
+   "visninger": 663
   },
   {
    "delinger": 0,
