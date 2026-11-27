@@ -1,22 +1,16 @@
 {
- "h_indeks": 5,
- "h_indeks_5aar": 5,
- "i10_indeks": 3,
- "i10_indeks_5aar": 3,
+ "h_indeks": 4,
+ "h_indeks_5aar": 4,
+ "i10_indeks": 2,
+ "i10_indeks_5aar": 2,
  "per_aar": {
-  "2021": 1,
-  "2022": 11,
-  "2023": 17,
-  "2024": 29,
-  "2025": 27,
-  "2026": 41
+  "2022": 3,
+  "2023": 5,
+  "2024": 12,
+  "2025": 20,
+  "2026": 30
  },
  "publikasjoner": [
-  {
-   "aar": 2022,
-   "siteringer": 56,
-   "tittel": "Spørsmål til Skole-Norge: Analyser og resultater fra Utdanningsdirektoratets spørreundersøkelse til skoler og skoleeiere høsten 2022"
-  },
   {
    "aar": 2023,
    "siteringer": 27,
@@ -140,6 +134,11 @@
   {
    "aar": 2022,
    "siteringer": 0,
+   "tittel": "Spørsmål til Skole-Norge: Analyser og resultater fra Utdanningsdirektoratets spørreundersøkelse til skoler og skoleeiere høsten 2022"
+  },
+  {
+   "aar": 2022,
+   "siteringer": 0,
    "tittel": "Deltakerundersøkelsen for barnehage- og skoleledere 2022: Resultater fra en spørreundersøkelse til deltakerne i den modulbaserte videreutdanningen for ledere i 2021–2022"
   },
   {
@@ -153,7 +152,7 @@
    "tittel": "Hvordan kan Synkende Fruktbarhet Forstås ut fra Generell Sosiologisk Teori?"
   }
  ],
- "siteringer": 128,
- "siteringer_5aar": 127,
- "tid": "2026-11-27T11:06:56Z"
+ "siteringer": 72,
+ "siteringer_5aar": 71,
+ "tid": "2026-11-27T11:22:07Z"
 }
