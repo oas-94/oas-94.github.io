@@ -2,17 +2,22 @@
  "facebook": {
   "melding": "",
   "ok": true,
-  "sist_ok": "2026-11-27T10:40:52Z"
+  "sist_ok": "2026-11-27T10:46:05Z"
  },
  "instagram": {
-  "melding": "www.instagram.com svarte 429",
+  "melding": "www.instagram.com svarte 404",
   "ok": false,
   "sist_ok": null
  },
  "linkedin": {
-  "melding": "fant ingen tall",
-  "ok": false,
-  "sist_ok": null
+  "melding": "",
+  "ok": true,
+  "sist_ok": "2026-11-27T10:46:05Z"
+ },
+ "scholar": {
+  "melding": "",
+  "ok": true,
+  "sist_ok": "2026-11-27T10:46:05Z"
  },
  "x": {
   "melding": "fant ingen tall",
