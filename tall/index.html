@@ -189,8 +189,8 @@ const P = {
   facebook:  { navn: "Facebook",  farge: "#6a4ce2", hoved: "venner", enhet: "venner", andre: [["folgere", "følgere"]], kilde: "Edge-utvidelsen",
     rek: "Rekonstruert fra datoen hver nåværende venn ble venn (dataeksport). Venner som er fjernet, er ikke med, så kurven er et minimum.", lenke: "https://www.facebook.com/" },
   instagram: { navn: "Instagram", farge: "#ee7fac", hoved: "folgere", enhet: "følgere", andre: [["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Edge-utvidelsen", lenke: "https://www.instagram.com/", lys: true },
-  bluesky:   { navn: "Bluesky",   farge: "#00b894", hoved: "folgere_aktive", enhet: "aktive følgere", andre: [["folgere", "i profilen"], ["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Åpent API, hver time", lenke: "https://bsky.app/profile/orjansamuelsen.no", lys: true },
-  mastodon:  { navn: "Mastodon",  farge: "#f2a600", hoved: "folgere", enhet: "følgere", andre: [["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Åpent API, hver time", lenke: "https://mastodon.social/@orjansamuelsen", lys: true },
+  bluesky:   { navn: "Bluesky",   farge: "#00b894", hoved: "folgere_aktive", enhet: "aktive følgere", andre: [["folgere", "i profilen"], ["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Åpent API, fra Edge og skyen", lenke: "https://bsky.app/profile/orjansamuelsen.no", lys: true },
+  mastodon:  { navn: "Mastodon",  farge: "#f2a600", hoved: "folgere", enhet: "følgere", andre: [["folger", "følger selv"], ["innlegg", "innlegg"]], kilde: "Åpent API, fra Edge og skyen", lenke: "https://mastodon.social/@orjansamuelsen", lys: true },
   scholar:   { navn: "Scholar",   farge: "#008a17", hoved: "siteringer", enhet: "siteringer", andre: [["h_indeks", "h-indeks"], ["i10_indeks", "i10"], ["publikasjoner", "publikasjoner"]], kilde: "Edge-utvidelsen (Google sperrer skyen)", lenke: "https://scholar.google.com/citations?user=1qEn9ZQAAAAJ", ikkePublikum: true },
 };
 const REKKEFOLGE = ["linkedin", "facebook", "instagram", "bluesky", "mastodon", "scholar"];
@@ -603,7 +603,10 @@ async function start() {
     const forsteEkte = s.find((p) => p.kilde !== "rekonstruert");
     D.serier[pl][m] = rens(forsteEkte ? s.filter((p) => p.kilde !== "rekonstruert" || p.t < forsteEkte.t) : s);
   }
-  for (const kilde of [isky, iedge]) for (const [pl, liste] of Object.entries(kilde || {})) if (P[pl]) for (const x of liste) D.innlegg.push({ ...x, plattform: pl });
+  // Samme innlegg kan komme fra både skyen og Edge; siste kilde (Edge) vinner
+  const innl = new Map();
+  for (const kilde of [isky, iedge]) for (const [pl, liste] of Object.entries(kilde || {})) if (P[pl]) for (const x of liste) innl.set(pl + "|" + x.id, { ...x, plattform: pl });
+  D.innlegg = [...innl.values()];
   D.scholar = [sch, sche].filter(Boolean).sort((a, b) => (b.tid || "").localeCompare(a.tid || ""))[0] || null;
   D.folgere = folg || {};
   for (const [pl, st] of Object.entries(sedge || {})) D.status[pl] = st;
