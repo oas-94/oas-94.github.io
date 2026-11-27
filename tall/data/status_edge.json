@@ -1,0 +1,22 @@
+{
+ "facebook": {
+  "melding": "",
+  "ok": true,
+  "sist_ok": "2026-11-27T10:40:52Z"
+ },
+ "instagram": {
+  "melding": "www.instagram.com svarte 429",
+  "ok": false,
+  "sist_ok": null
+ },
+ "linkedin": {
+  "melding": "fant ingen tall",
+  "ok": false,
+  "sist_ok": null
+ },
+ "x": {
+  "melding": "fant ingen tall",
+  "ok": false,
+  "sist_ok": null
+ }
+}
